@@ -1,5 +1,4 @@
 var api = require('../../../config/api.js');
-var check = require('../../../utils/check.js');
 
 var app = getApp();
 Page({
