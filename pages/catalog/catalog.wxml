@@ -1,0 +1,36 @@
+<!-- 分类 -->
+<view class="container">
+  <view class="search">
+    <navigator url="/pages/search/search" class="input">
+      <image class="icon"></image>
+      <text class="txt">商品搜索, 共0款好物 </text>
+    </navigator>
+  </view>
+  <view class="catalog">
+    <scroll-view class="nav" scroll-y="true">
+        <view class="item">嘎嘎嘎</view>
+        <view class="item">嘎嘎嘎</view>
+        <view class="item">嘎嘎嘎</view>
+        <view class="item">嘎嘎嘎</view>
+        <view class="item">嘎嘎嘎</view>
+        <view class="item">嘎嘎嘎</view>
+    </scroll-view>
+    <scroll-view class="cate" scroll-y="true">
+        <navigator url="/pages/catalog/catalog" class="banner">
+            <image class="image" src="../../static/images/8.jpg"></image>
+            <view class="txt">111</view>
+        </navigator>
+        <view class="hd">
+            <text class="line"></text>
+            <text class="txt">方法分类</text>
+            <text class="line"></text>
+        </view>
+        <view class="bd">
+            <navigator url="/pages/category/category" class="item last">
+                <image class="icon" src="../../static/images/8.jpg"></image>
+                <text class="txt">紧急</text>
+            </navigator>
+        </view>
+    </scroll-view>
+  </view>
+</view>

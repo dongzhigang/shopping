@@ -1,0 +1,43 @@
+<!-- 分类详情 -->
+<view class="container">
+    <view class="cate-nav">
+        <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+            <view  class="item active">
+                <view class="name">紧急</view>
+            </view>
+        </scroll-view>
+    </view>
+    <scroll-view scroll-y="true" scroll-top="" style="">
+      <view class="cate-item">
+          <view class="h">
+              <text class="name">紧急</text>
+              <text class="desc">很好</text>
+          </view>
+          <view class="b">
+              <navigator class="item item-b"  url="/pages/goods/goods">
+                  <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+                  <text class="name">很好</text>
+                  <text class="price">￥12</text>
+              </navigator>
+          </view>
+      </view>
+    </scroll-view>
+</view>

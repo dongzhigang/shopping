@@ -1,0 +1,211 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 轮播 -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper-item >
+      <!-- <navigator url="{{item.link}}"> -->
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <!-- </navigator> -->
+    </swiper-item>
+    <swiper-item >
+      <!-- <navigator url="{{item.link}}"> -->
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <!-- </navigator> -->
+    </swiper-item>
+    <swiper-item >
+      <!-- <navigator url="{{item.link}}"> -->
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <!-- </navigator> -->
+    </swiper-item>
+  </swiper>
+  <!-- 分类 -->
+  <view class="m-menu">
+    <navigator class="item" url="/pages/category/category" >
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <text>111</text>
+    </navigator>
+    <navigator class="item" url="/pages/category/category" >
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <text>111</text>
+    </navigator>
+    <navigator class="item" url="/pages/category/category" >
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <text>111</text>
+    </navigator>
+    <navigator class="item" url="/pages/category/category" >
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <text>111</text>
+    </navigator>
+    <navigator class="item" url="/pages/category/category" >
+      <image src="../../static/images/8.jpg" background-size="cover"></image>
+      <text>111</text>
+    </navigator>
+  </view>
+  <!-- 优惠专区 -->
+  <view class="a-section a-groupon" >
+    <view class="h">
+      <view class="title">
+      <view>
+        <!-- <navigator url="../hotGoods/hotGoods"> -->
+        <text class="txt">优惠专区</text>
+        <!-- </navigator> -->
+      </view>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item">
+      <navigator url="/pages/goods/goods">
+        <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+        <view class="right">
+        <view class="text">
+          <view class="header">
+          <text class="name">急急急</text>
+          <view class="capsule-tag">
+            <zan-capsule color="#a78845" leftText="团购" rightText="单买" />
+          </view>
+          </view>
+          <text class="desc">斤斤计较急急急急急急急急急</text>
+          <view class="price">
+          <view class="counterPrice">原价：￥12</view>
+          <view class="retailPrice">现价：￥10</view>
+          </view>
+        </view>
+        </view>
+      </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 品牌制造商直供 -->
+  <view class="a-section a-brand">
+    <view class="h">
+      <navigator url="../brand/brand">
+      <text class="txt">品牌制造商直供</text>
+      </navigator>
+    </view>
+    <view class="b">
+      <view class="item item-1">
+        <navigator url="/pages/brandDetail/brandDetail">
+          <view class="wrap">
+          <image class="img" src="../../static/images/8.jpg" mode="aspectFill"></image>
+          <view class="mt">
+            <text class="brand">很好</text>
+            <text class="price">12</text>
+            <text class="unit">元起</text>
+          </view>
+          </view>
+        </navigator>
+      </view>
+      <view class="item item-1">
+        <navigator url="/pages/brandDetail/brandDetail">
+          <view class="wrap">
+          <image class="img" src="../../static/images/8.jpg" mode="aspectFill"></image>
+          <view class="mt">
+            <text class="brand">很好</text>
+            <text class="price">12</text>
+            <text class="unit">元起</text>
+          </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 新品首发 -->
+  <view class="a-section a-new">
+    <view class="h">
+      <view>
+      <navigator url="../newGoods/newGoods">
+        <text class="txt">周一周四 · 新品首发</text>
+      </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item">
+        <navigator url="../goods/goods}}">
+          <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+          <text class="name">很好</text>
+          <text class="price">￥15</text>
+        </navigator>
+      </view>
+      <view class="item">
+        <navigator url="../goods/goods}}">
+          <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+          <text class="name">很好</text>
+          <text class="price">￥15</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 人气推荐 -->
+  <view class="a-section a-popular">
+    <view class="h">
+      <view>
+      <navigator url="../hotGoods/hotGoods">
+        <text class="txt">人气推荐</text>
+      </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item" >
+      <navigator url="/pages/goods/goods?id={{item.id}}">
+        <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+        <view class="right">
+        <view class="text">
+          <text class="name">很好</text>
+          <text class="desc">烦烦烦 方法</text>
+          <text class="price">￥12</text>
+        </view>
+        </view>
+      </navigator>
+      </view>
+    </view>
+  </view>
+  <!-- 专题精选 -->
+  <view class="a-section a-topic">
+    <view class="h">
+      <view>
+      <navigator url="/pages/topic/topic">
+        <text class="txt">专题精选</text>
+      </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <scroll-view scroll-x class="list">
+      <view class="item" >
+        <navigator url="../topicDetail/topicDetail">
+        <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+        <view class="np">
+          <text class="name">烦烦烦</text>
+          <text class="price">￥12元起</text>
+        </view>
+        <text class="desc">据</text>
+        </navigator>
+      </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="good-grid" >
+    <view class="h">
+      <view>
+      <text>嘎嘎嘎</text>
+      </view>
+    </view>
+    <view class="b">
+      <block>
+      <view class="item item-b {{iindex % 2 == 0 ? '' : 'item-b'}}">
+        <navigator url="../goods/goods?id={{iitem.id}}" class="a">
+        <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
+        <text class="name">很好</text>
+        <text class="price">￥15</text>
+        </navigator>
+      </view>
+      </block>
+      <view class="item item-b item-more">
+      <navigator url="/pages/category/category?id={{item.id}}" class="more-a">
+        <view class="txt">{{'更多'+item.name+'好物'}}</view>
+        <image class="icon" src="../../static/images/icon_go_more.png" background-size="cover"></image>
+      </navigator>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,53 @@
+<!-- 我的团购 -->
+<view class="container">
+ <view class="orders-switch">
+  <view class="item active" bindtap="switchTab" data-index='0'>
+   <view class="txt">发起的团购</view>
+  </view>
+  <view class="item active" bindtap="switchTab" data-index='1'>
+   <view class="txt">参加的团购</view>
+  </view>
+ </view>
+ <view class="no-order" >
+  <view class="c">
+   <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
+   <text>尚未参加任何团购</text>
+  </view>
+ </view>
+
+ <view class="orders">
+  <navigator url="../grouponDetail/grouponDetail?id={{item.id}}" class="order">
+   <view class="h">
+    <view class="l">订单编号：111</view>
+    <view class="r">迪斯科解放和</view>
+   </view>
+   <view class="j">
+    <view class="l">团购立减：￥5</view>
+    <view class="r">参与时间：2015-12-10</view>
+   </view>
+   <view class="i">
+    <view class="l">团购要求：5人</view>
+    <view class="r">当前参与：3</view>
+   </view>
+   <view class="goods" >
+    <view class="img">
+     <image src="/static/images/8.jpg"></image>
+    </view>
+    <view class="info">
+     <text class="name">hhhh</text>
+     <text class="number">共5件商品</text>
+    </view>
+    <view class="status"></view>
+   </view>
+   <view class="b">
+    <view class="l">实付：￥12</view>
+    <view class="capsule-tag">
+     <zan-capsule color="#a78845" leftText="状态" rightText="{{item.joinerCount>=item.rules.discountMember?'已达成':'团购中'}}" />
+    </view>
+    <view class="capsule-tag">
+     <zan-capsule color="#a78845" leftText="发起" rightText="{{item.creator}}" wx:if="{{!item.isCreator}}" />
+    </view>
+   </view>
+  </navigator>
+ </view>
+</view>

@@ -1,0 +1,41 @@
+<!-- 人气推荐 -->
+<view class="container">
+  <view class="brand-info">
+    <view class="name">
+      <image class="img" src="/static/images/8.jpg" background-size="cover"></image>
+      <view class="info-box">
+        <view class="info">
+          <text class="txt">哈哈哈</text>
+          <text class="line"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="sort">
+    <view class="sort-box">
+      <view class="item active"  bindtap="openSortFilter" id="defaultSort">
+        <text class="txt">综合</text>
+      </view>
+      <view class="item by-price {{currentSortType == 'price' ? 'active' : ''}} {{currentSortOrder == 'asc'  ? 'asc' : 'desc'}}" bindtap="openSortFilter" id="priceSort">
+        <text class="txt">价格</text>
+      </view>
+      <view class="item {{currentSortType == 'category' ? 'active' : ''}}" bindtap="openSortFilter" id="categoryFilter">
+        <text class="txt">分类</text>
+      </view>
+    </view>
+    <view class="sort-box-category" >
+      <view class="item {{item.checked ? 'active' : ''}}" bindtap="selectCategory">很好</view>
+    </view>
+  </view>
+  <view class="cate-item">
+    <view class="b">
+      <block >
+        <navigator class="item {{iindex % 2 == 0 ? 'item-b' : '' }}" url="../goods/goods">
+          <image class="img" src="/static/images/8.jpg" background-size="cover"></image>
+          <text class="name">哈哈哈</text>
+          <text class="price">￥55</text>
+        </navigator>
+      </block>
+    </view>
+  </view>
+</view>

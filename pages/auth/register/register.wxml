@@ -1,0 +1,29 @@
+<!-- 注册 -->
+<view class="container">
+    <view class="form-box">
+    	<view class="form-item">
+    		<input class="username" value="" bindinput="bindUsernameInput" placeholder="用户名" auto-focus/>
+    		<image id="clear-username" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+    	</view>
+    	<view class="form-item">
+    		<input class="password" value="" password bindinput="bindPasswordInput" placeholder="密码"/>
+    		<image class="clear" id="clear-password" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+    	</view>
+      <view class="form-item">
+    		<input class="password" value="" password bindinput="bindConfirmPasswordInput" placeholder="确认密码"/>
+    		<image class="clear" id="clear-confirm-password" src="/static/images/clear_input.png" atchtap="clearInput"></image>
+    	</view>
+    <view class="form-item">
+      <input class="mobile" value="" bindinput="bindMobileInput" placeholder="手机号" />
+    	<image id="clear-mobile" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+    </view>		
+    <view class="form-item-code" >
+			<view class="form-item code-item">
+				<input class="code" value="" bindinput="bindCodeInput" placeholder="验证码"/>
+				<image class="clear" id="clear-code" src="/static/images/clear_input.png" catchtap="clearInput"></image>
+			</view>
+			<view class="code-btn" bindtap="sendCode">获取验证码</view>
+		</view>
+    	<button type="default" class="register-btn" bindtap="startRegister">注册</button>
+    </view>
+</view>
