@@ -1,6 +1,6 @@
 // 以下是业务服务器API地址
 // 本机开发时使用
- var WxApiRoot = 'http://localhost:8080/wx/';
+var WxApiRoot = 'http://192.168.1.22/';
 // 局域网测试使用
 // var WxApiRoot = 'http://192.168.0.101:8080/wx/';
 // 云平台部署时使用
@@ -9,6 +9,7 @@
 // var WxApiRoot = 'https://www.menethil.com.cn/wx/';
 
 module.exports = {
+ WxApiRoot: WxApiRoot,
  IndexUrl: WxApiRoot + 'home/index', //首页数据接口
  CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口
  CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口
@@ -23,7 +24,7 @@ module.exports = {
  GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
  GoodsList: WxApiRoot + 'goods/list', //获得商品列表
  GoodsCategory: WxApiRoot + 'goods/category', //获得分类数据
- GoodsDetail: WxApiRoot + 'goods/detail', //获得商品的详情
+ GoodsDetail: WxApiRoot + 'shoppingAdmin/index/product/getProductInfo', //获得商品的详情
  GoodsNew: WxApiRoot + 'goods/new', //新品
  GoodsHot: WxApiRoot + 'goods/hot', //热门
  GoodsRelated: WxApiRoot + 'goods/related', //商品详情页的关联商品（大家都在看）

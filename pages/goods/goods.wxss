@@ -63,7 +63,10 @@
   overflow: hidden;
   background: #fff;
 }
-
+.goods-info-name{
+  font-size: 36rpx;
+  margin-bottom: 10rpx;
+}
 .goods-info .c {
   display: block;
   width: 718.75rpx;
@@ -120,8 +123,7 @@
 }
 
 .goods-info .desc {
-  height: 43rpx;
-  margin-bottom: 41rpx;
+  margin-bottom: 20rpx;
   font-size: 24rpx;
   line-height: 36rpx;
   color: #999;
@@ -365,28 +367,29 @@
 .goods-attr .item {
   width: 687.5rpx;
   height: 68rpx;
-  padding: 11rpx 20rpx;
+  line-height: 68rpx;
   margin-bottom: 11rpx;
   background: #f7f7f7;
   font-size: 38.5rpx;
+  display: flex;
+  align-items: center;
 }
 
 .goods-attr .left {
   float: left;
   font-size: 25rpx;
   width: 134rpx;
-  height: 45rpx;
   line-height: 45rpx;
   overflow: hidden;
   color: #999;
+  padding-left: 10rpx;
 }
 
 .goods-attr .right {
   float: left;
-  font-size: 36.5rpx;
+  font-size: 30rpx;
   margin-left: 20rpx;
   width: 480rpx;
-  height: 45rpx;
   line-height: 45rpx;
   overflow: hidden;
   color: #333;

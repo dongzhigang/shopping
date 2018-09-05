@@ -6,137 +6,131 @@ var user = require('../../utils/user.js');
 
 Page({
   data: {
+    path:app.globelData.path,
     hasSpec: false,                  //规格选择界面显示隐藏，true显示，false隐藏
-    isFooter:false
+    isFooter:false,                  //判断是否售空
+    goodsimgs:[],                    //商品主图
+    productInfo:[],                  //商品信息
+    Property:[],                     //商品属性
   },
-
-  // 页面分享
-  onShareAppMessage: function() {
-    
-  },
-
-  shareFriendOrCircle: function() {
-    
-  },
-
-  // 保存分享图
-  saveShare: function() {
-    
-  },
-
-  //从分享的团购进入
-  getGrouponInfo: function(grouponId) {
-    
-  },
-
+  /**
+   * 事件
+   */
   // 获取商品信息
-  getGoodsInfo: function() {
-    
+  getGoodsInfo: function () {
+    let _that = this;
+    let url = api.GoodsDetail;
+    let data = {
+      'id':this.data.id
+    }
+    util.request(url, data, 'POST').then(function(res){
+      console.log(res)
+      if (res.code == 0){
+        util.showLoading(res.msg,function(){
+          setTimeout(function () {
+            wx.hideLoading();
+            _that.setData({
+              goodsimgs: res.data.master,
+              productInfo: res.data.productInfo,
+              property: res.data.property,
+              parameter: res.data.parameter,
+            })
+          }, 1000)
+        })
+      }
+    });
   },
-
+  //选择规格切换
+  switchAttrPop: function () {
+    this.setData({
+      hasSpec: !this.data.hasSpec
+    })
+  },
+  closeAttr: function () {
+  },
+  closeShare: function () {
+  },
+  openCartPage: function () {
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+  },
+  //根据已选的值，计算其它值的状态
+  setSpecValueStatus: function () {
+  },
+  // 页面分享
+  onShareAppMessage: function() {    
+  },
+  shareFriendOrCircle: function() {
+  },
+  // 保存分享图
+  saveShare: function() { 
+  },
+  //从分享的团购进入
+  getGrouponInfo: function(grouponId) { 
+  },
   // 获取推荐商品
   getGoodsRelated: function() {
-    
   },
-
   // 团购选择
   clickGroupon: function(event) {
-    
   },
-
   // 规格选择
   clickSkuValue: function(event) {
-    
   },
-
   //获取选中的团购信息
   getCheckedGrouponValue: function() {
-    
   },
-
   //获取选中的规格信息
   getCheckedSpecValue: function() {
-    
   },
-
   //判断规格是否选择完整
   isCheckedAllSpec: function() {
-    
   },
-
   getCheckedSpecKey: function() {
-    
   },
-
   // 规格改变时，重新计算价格及显示信息
   changeSpecInfo: function() {
-    
   },
-
   // 获取选中的产品（根据规格）
   getCheckedProductItem: function(key) {
-    
   },
-
-  onLoad: function(options) {
-    
-  },
-  onShow: function() {
-    
-  },
-
   //添加或是取消收藏
   addCollectOrNot: function() {
-    
-
   },
-
   //立即购买（先自动加入购物车）
-  addFast: function() {
-    
+  addFast: function() {  
   },
-
   //添加到购物车
   addToCart: function() {
-    
   },
-
   cutNumber: function() {
-    
   },
   addNumber: function() {
-    
+  },
+  /**
+   * app生命周期
+   */
+  onLoad: function (options) {
+    let id = options.id;
+    this.setData({
+      id:id
+    })
+    this.getGoodsInfo();
+  },
+  onShow: function () {
+
   },
   onHide: function() {
     // 页面隐藏
 
   },
-  onUnload: function() {
-    // 页面关闭
-
-  },
-  switchAttrPop: function() {
-    
-  },
-  closeAttr: function() {
-    
-  },
-  closeShare: function() {
-    
-  },
-  openCartPage: function() {
-    
-  },
-  onReady: function() {
+  onReady: function () {
     // 页面渲染完成
 
   },
-  // 下拉刷新
-  onPullDownRefresh() {
-    
-  },
-  //根据已选的值，计算其它值的状态
-  setSpecValueStatus: function() {
+  onUnload: function() {
+    // 页面关闭
 
   },
 

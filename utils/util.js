@@ -20,7 +20,7 @@ function formatNumber(n) {
 }
 
 /**
- * 封封微信的的request
+ * 封装微信的的request
  */
 function request(url, data = {}, method = "GET") {
   return new Promise(function (resolve, reject) {
@@ -29,13 +29,10 @@ function request(url, data = {}, method = "GET") {
       data: data,
       method: method,
       header: {
-        'Content-Type': 'application/json',
-        'X-Litemall-Token': wx.getStorageSync('token')
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-
         if (res.statusCode == 200) {
-
           if (res.data.errno == 501) {
             // 清除登录相关内容
             try {
@@ -61,6 +58,26 @@ function request(url, data = {}, method = "GET") {
       }
     })
   });
+}
+/**
+ * 显示消息提示框
+ */
+function showToast(msg){
+  wx.showToast({
+    title: msg,
+    icon: 'success',
+    duration: 2000
+  })
+}
+/**
+ * 封装显示 loading 提示框,
+ */
+function showLoading(msg, success){
+  wx.showLoading({
+    title: msg,
+    mask: true,
+    success: success,
+  })
 }
 
 function redirect(url) {
@@ -89,7 +106,9 @@ module.exports = {
   formatTime,
   request,
   redirect,
-  showErrorToast
+  showErrorToast,
+  showToast,
+  showLoading
 }
 
 

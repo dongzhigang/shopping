@@ -8,5 +8,8 @@ App({
   onShow: function (options) {
 
   },
+  globelData:{
+    path: api.WxApiRoot
+  }
 
 })
