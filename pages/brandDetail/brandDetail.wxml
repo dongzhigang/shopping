@@ -1,26 +1,26 @@
 <view class="container">
     <view class="brand-info">
         <view class="name">
-            <image class="img" src="{{brand.picUrl}}" background-size="cover"></image>
+            <image class="img" src="{{path}}{{brand.img}}" background-size="cover"></image>
             <view class="info-box">
                 <view class="info">
-                    <text class="txt">{{brand.name}}</text>
+                    <text class="txt">{{brand.brand_name}}</text>
                     <text class="line"></text>
                 </view>
             </view>
         </view>
         <view class="desc">
-            {{brand.desc}}
+            {{brand.docs}}
         </view>
     </view>
 
     <view class="cate-item">
         <view class="b">
-            <block wx:for="{{goodsList}}" wx:key="id" wx:for-index="iindex" wx:for-item="iitem">
-            <navigator class="item {{iindex % 2 == 0 ? 'item-b' : ''}}" url="../goods/goods?id={{iitem.id}}">
-                <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
-                <text class="name">{{iitem.name}}</text>
-                <text class="price">￥{{iitem.retailPrice}}</text>
+            <block wx:for="{{goodsList}}" wx:key="id" wx:for-index="iindex" wx:for-item="item">
+            <navigator class="item" url="../goods/goods?id={{iitem.id}}">
+                <image class="img" src="{{path+item.img}}" background-size="cover"></image>
+                <text class="name">{{item.name}}</text>
+                <text class="price">￥{{item.at_price}}</text>
             </navigator>
             </block>
         </view>

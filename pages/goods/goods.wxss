@@ -759,11 +759,9 @@
   overflow: hidden;
 }
 
-.spec-con .name {
-  height: 32rpx;
+.spec-con .Name {
   margin-bottom: 22rpx;
   font-size: 29rpx;
-  color: #333;
 }
 
 .spec-con .values {

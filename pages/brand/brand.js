@@ -3,28 +3,30 @@ var api = require('../../config/api.js');
 var app = getApp();
 Page({
   data: {
+    path:app.globalData.path,
     brandList: [],
     page: 1,
-    size: 10,
-    totalPages: 1
+    rows: 10,
   },
-  onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
-    this.getBrandList();
-  },
+  /**
+   * 事件
+   */
   getBrandList: function () {
-    wx.showLoading({
-      title: '加载中...',
-    });
-    let that = this;
-    util.request(api.BrandList, { page: that.data.page, size: that.data.size }).then(function (res) {
-      if (res.errno === 0) {
-        that.setData({
-          brandList: that.data.brandList.concat(res.data.brandList),
-          totalPages: res.data.totalPages
-        });
-      }
-      wx.hideLoading();
+    let _that = this;
+    let url = api.BrandList;
+    let data = {
+      page:this.data.page,
+      rows:this.data.rows
+    }
+    util.showLoading(function(){
+      util.request(url,data).then(function(res){
+        if(res.code==0){
+          wx.hideLoading();
+          _that.setData({
+            brandList:res.data
+          })
+        }
+      })
     });
   },
   onReachBottom (){
@@ -36,6 +38,13 @@ Page({
       return false;
     }
 
+    this.getBrandList();
+  },
+  /**
+   * 生命周期
+   */
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
     this.getBrandList();
   },
   onReady: function () {

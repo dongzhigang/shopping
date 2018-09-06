@@ -1,48 +1,46 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
-
-
 var app = getApp();
 
 Page({
   data: {
-    id: 0,
+    path:app.globalData.path,
     brand: {},
     goodsList: [],
     page: 1,
-    size: 100
+    rows: 10
   },
+  /**
+   * 事件
+   */
+  getBrand: function () {
+    let _that = this;
+    let url = api.BrandDetail;
+    let data = {
+      id:this.data.id
+    }
+    util.showLoading(function(){
+      util.request(url, data).then(function (res) {
+        console.log(res)
+        if (res.code == 0) {
+          _that.setData({
+            brand: res.data.brand,
+            goodsList: res.data.brandList
+          });
+          wx.hideLoading();
+        }
+      });
+    })
+  },
+  /**
+   * 生命周期
+   */
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    var that = this;
-    that.setData({
+    this.setData({
       id: parseInt(options.id)
     });
     this.getBrand();
-  },
-  getBrand: function () {
-    let that = this;
-    util.request(api.BrandDetail, { id: that.data.id }).then(function (res) {
-      if (res.errno === 0) {
-        that.setData({
-          brand: res.data.brand
-        });
-
-        that.getGoodsList();
-      }
-    });
-  },
-  getGoodsList() {
-    var that = this;
-
-    util.request(api.GoodsList, { brandId: that.data.id, page: that.data.page, size: that.data.size})
-      .then(function (res) {
-        if (res.errno === 0) {
-          that.setData({
-            goodsList: res.data.goodsList
-          });
-        }
-      });
   },
   onReady: function () {
     // 页面渲染完成

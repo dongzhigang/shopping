@@ -72,9 +72,9 @@ function showToast(msg){
 /**
  * 封装显示 loading 提示框,
  */
-function showLoading(msg, success){
+function showLoading(success){
   wx.showLoading({
-    title: msg,
+    title: '加载中...',
     mask: true,
     success: success,
   })

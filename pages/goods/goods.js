@@ -6,12 +6,14 @@ var user = require('../../utils/user.js');
 
 Page({
   data: {
-    path:app.globelData.path,
+    path:app.globalData.path,        //域名
     hasSpec: false,                  //规格选择界面显示隐藏，true显示，false隐藏
     isFooter:false,                  //判断是否售空
     goodsimgs:[],                    //商品主图
     productInfo:[],                  //商品信息
     Property:[],                     //商品属性
+    answer:[],
+    num:0,                           //商品数量
   },
   /**
    * 事件
@@ -23,22 +25,21 @@ Page({
     let data = {
       'id':this.data.id
     }
-    util.request(url, data, 'POST').then(function(res){
-      console.log(res)
-      if (res.code == 0){
-        util.showLoading(res.msg,function(){
-          setTimeout(function () {
-            wx.hideLoading();
-            _that.setData({
-              goodsimgs: res.data.master,
-              productInfo: res.data.productInfo,
-              property: res.data.property,
-              parameter: res.data.parameter,
-            })
-          }, 1000)
-        })
-      }
-    });
+    util.showLoading(function () {
+      util.request(url, data, 'POST').then(function (res) {
+        console.log(res)
+        if (res.code == 0) {
+          _that.setData({
+            goodsimgs: res.data.master,
+            productInfo: res.data.productInfo,
+            property: res.data.property,
+            parameter: res.data.parameter,
+            answer: res.data.answer
+          })
+          wx.hideLoading();
+        }
+      });
+    })
   },
   //选择规格切换
   switchAttrPop: function () {
@@ -46,6 +47,28 @@ Page({
       hasSpec: !this.data.hasSpec
     })
   },
+  //改变数量
+  inputNunber:function(e){
+    let num = e.detail.value;
+    this.setData({ num: num });
+  },
+  //数量减少
+  cutNumber: function () {
+    let num = this.data.num;
+    num-=1;
+    if(num < 0){
+      return;
+    }
+    this.setData({num:num})
+
+  },
+  //数量增加
+  addNumber: function () {
+    let num = this.data.num;
+    num += 1;
+    this.setData({ num: num })
+  },
+
   closeAttr: function () {
   },
   closeShare: function () {
@@ -103,10 +126,6 @@ Page({
   },
   //添加到购物车
   addToCart: function() {
-  },
-  cutNumber: function() {
-  },
-  addNumber: function() {
   },
   /**
    * app生命周期

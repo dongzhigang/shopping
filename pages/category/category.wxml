@@ -2,40 +2,23 @@
 <view class="container">
     <view class="cate-nav">
         <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
-            </view>
-            <view  class="item active">
-                <view class="name">紧急</view>
+            <view  class="item {{atId == item.id?'active':''}}" wx:for="{{currentList}}" wx:key="index">
+                <view class="name">{{item.Sort_name}} </view>
             </view>
         </scroll-view>
     </view>
-    <scroll-view scroll-y="true" scroll-top="" style="">
+    <scroll-view scroll-y="true" scroll-top="" style="height:{{height}}px">
       <view class="cate-item">
           <view class="h">
-              <text class="name">紧急</text>
-              <text class="desc">很好</text>
+              <text class="name">{{currenName}}</text>
+              <text class="desc">{{currenDocs}}</text>
           </view>
           <view class="b">
-              <navigator class="item item-b"  url="/pages/goods/goods">
-                  <image class="img" src="../../static/images/8.jpg" background-size="cover"></image>
-                  <text class="name">很好</text>
-                  <text class="price">￥12</text>
+              <navigator class="item"  url="/pages/goods/goods?id={{item.id}}" 
+                  wx:for="{{productList}}" wx:key="index">
+                  <image class="img" src="{{path+item.img}}" background-size="cover"></image>
+                  <text class="name">{{item.name}}</text>
+                  <text class="price">￥{{item.at_price}}</text>
               </navigator>
           </view>
       </view>
