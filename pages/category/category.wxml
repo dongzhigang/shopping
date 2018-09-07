@@ -1,8 +1,10 @@
-<!-- 分类详情 -->
+<!-- 当前分类 -->
 <view class="container">
     <view class="cate-nav">
         <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
-            <view  class="item {{atId == item.id?'active':''}}" wx:for="{{currentList}}" wx:key="index">
+            <view  class="item {{sortId == item.id?'active':''}}" wx:for="{{currentList}}" wx:key="index" 
+              data-id="{{id}}" data-sortId='{{item.id}}'  data-name="{{item.Sort_name}}"  
+              data-docs="{{item.docs}}"  bindtap='switchCate'>
                 <view class="name">{{item.Sort_name}} </view>
             </view>
         </scroll-view>
@@ -13,7 +15,7 @@
               <text class="name">{{currenName}}</text>
               <text class="desc">{{currenDocs}}</text>
           </view>
-          <view class="b">
+          <view class="b" wx:if="{{productList.length}}">
               <navigator class="item"  url="/pages/goods/goods?id={{item.id}}" 
                   wx:for="{{productList}}" wx:key="index">
                   <image class="img" src="{{path+item.img}}" background-size="cover"></image>

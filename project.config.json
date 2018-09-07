@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -82,10 +82,11 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "新品首发",
 					"pathName": "pages/newGoods/newGoods",
-					"query": ""
+					"query": "",
+					"scene": "1001"
 				},
 				{
 					"id": 9,
@@ -96,7 +97,7 @@
 				},
 				{
 					"id": 10,
-					"name": "当前分类",
+					"name": "当前分类-商品列表",
 					"pathName": "pages/category/category",
 					"query": "id=1&title=居家",
 					"scene": "1001"

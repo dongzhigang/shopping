@@ -22,8 +22,8 @@ module.exports = {
   AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号
 
   GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
-  GoodsList: WxApiRoot + 'goods/list', //获得商品列表
-  GoodsCategory: WxApiRoot + 'goods/category', //获得分类数据
+  GoodsList: WxApiRoot + 'shoppingAdmin/index/Product/productList', //获得商品列表
+  GoodsCategory: WxApiRoot + 'shoppingAdmin/index/Product/currentList', //获得分类数据
   GoodsDetail: WxApiRoot + 'shoppingAdmin/index/product/getProductInfo', //获得商品的详情
   GoodsNew: WxApiRoot + 'goods/new', //新品
   GoodsHot: WxApiRoot + 'goods/hot', //热门

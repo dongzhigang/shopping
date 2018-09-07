@@ -35,6 +35,8 @@ Page({
           })
           wx.hideLoading();
         }
+      }).catch(function(err){
+        console.log(err)
       });
     })
   },

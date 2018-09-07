@@ -5,7 +5,7 @@ const app = getApp();
 
 Page({
   data: {
-    atId:0,                         //当前id
+    id:0,                         //当前id
     path:app.globalData.path,
     height: app.globalData.Height,
     currentList:[],                 //当前分类列表
@@ -19,38 +19,80 @@ Page({
   //当前分类
   categoryList:function(){
     let _that = this;
-    let url = api.CatalogCurrent;
+    let url = api.GoodsCategory;
     let data = {
-      id:this.data.id,
-      page: this.data.page,
-      rows:this.data.rows
+      id:this.data.id,                    //一级分类id
     }
     util.showLoading(function () {
       util.request(url, data).then(function (res) {
         console.log(res)
         if (res.code == 0) {
           _that.setData({
-            atId: res.data.currentList[0].id,
-            currenName: res.data.currentList[0].Sort_name,
-            currenDocs: res.data.currentList[0].docs,
             currentList: res.data.currentList,
-            productList: res.data.productList
           })
+          _that.productList();
           wx.hideLoading();
         }
       })
     })
   },
+  //获得商品列表数据
+  productList:function(){
+    let _that = this;
+    let url = api.GoodsList;
+    let data = {
+      id: this.data.id,                    //一级分类id
+      page: this.data.page,
+      rows: this.data.rows
+    }
+    if (this.data.sortId){
+      data.sortId = this.data.sortId
+    }
+    util.showLoading(function () {
+      util.request(url, data).then(function (res) {
+        console.log(res)
+        if (res.code == 0) {
+          _that.setData({
+            productList: res.data.productList,
+            sortId: res.data.sortFind.id,
+            currenName: res.data.sortFind.Sort_name,
+            currenDocs: res.data.sortFind.docs
+          })
+        }
+        wx.hideLoading();
+      })
+    })
+  },
+  //选择分类
+  switchCate:function(e){
+    let id = e.currentTarget.dataset.id;
+    let sortId = e.currentTarget.dataset.sortid;
+    let name = e.currentTarget.dataset.name;
+    let docs = e.currentTarget.dataset.docs;
+    console.log(e)
+    if (sortId == this.data.sortId) {
+      return;
+    }
+    this.setData({
+      id: id,
+      sortId: sortId,
+      currenName:name,
+      currenDocs:docs
+    });
+    this.productList();
+  },
 
   // 页面渲染
   onLoad: function (options) {
     let id = options.id;
+    let sortId = options.sortId;
     let title = options.title;
     wx.setNavigationBarTitle({
       title: title
     })
     this.setData({
-      id:id
+      id: id,
+      sortId: sortId
     })
     this.categoryList();
   },

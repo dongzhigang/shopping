@@ -25,7 +25,7 @@ Page({
         if (res.code == 0) {
           _that.setData({
             brand: res.data.brand,
-            goodsList: res.data.brandList
+            goodsList: res.data.goodsList
           });
           wx.hideLoading();
         }

@@ -382,7 +382,7 @@
   align-items: center;
   justify-content: center;
   height: 130rpx;
-  font-size: 33rpx;
+  font-size: 38rpx;
   color: #333;
 }
 
