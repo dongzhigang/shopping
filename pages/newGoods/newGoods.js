@@ -4,20 +4,22 @@ var app = getApp();
 
 Page({
   data: {
-    bannerInfo: {
+    path:app.globalData.path,
+    goodsList: [],                    //商品列表
+    currentSortType: 'default',       //当前选中
+    categoryFilter:false,             //子分类显示隐藏
+    fieldSortList:[],                 //子分类列表
+    order: '',                        //排序，desc下降，asc上升，null为综合 
+    id:'',                            //子分类id
+    page: 1,
+    rows: 100,
+
+    bannerInfo: {                     //新品海报
       'imgUrl': '',
       'name': ''
     },
-    categoryFilter: false,
-    filterCategory: [],
-    goodsList: [],
-    categoryId: 0,
-    currentSortType: 'default',
-    currentSort: 'add_time',
-    currentSortOrder: 'desc',
-    page: 1,
-    size: 100
   },
+
   getBanner: function () {
     let that = this;
     util.request(api.GoodsNew).then(function (res) {
@@ -28,22 +30,84 @@ Page({
       }
     });
   },
+  //商品列表
   getGoodsList: function() {
-    var that = this;
-
-    util.request(api.GoodsList, { isNew: true, page: that.data.page, size: that.data.size, order: that.data.currentSortOrder, sort: that.data.currentSort, categoryId: that.data.categoryId })
-      .then(function (res) {
-        if (res.errno === 0) {
+    let that = this;
+    let url = api.GoodsList;
+    let data={
+      'page' : this.data.page,
+      'rows' : this.data.rows, 
+      'new_product':1
+    };
+    //排序
+    if (this.data.order){
+      data.order = this.data.order
+    }
+    //分类
+    if(this.data.id){
+      data.id = this.data.id
+    }
+    util.request(url, data).then(function (res) {
+        console.log(res)
+        if (res.code === 0) {
           that.setData({
-            goodsList: res.data.goodsList,
-            filterCategory: res.data.filterCategoryList
+            goodsList: res.data.productList,
+            fieldSortList: res.data.fieldSortList
           });
         }
       });
   },
+  openSortFilter: function (e) {
+    let currentId = e.currentTarget.id;
+    switch (currentId) {
+      case 'categoryFilter':
+        this.setData({         
+          currentSortType: 'category',
+          categoryFilter: !this.data.categoryFilter,
+          order: '',
+        });
+        break;
+      case 'priceSort':
+        let tmpSortOrder = this.data.order;
+        console.log(tmpSortOrder)
+        if (tmpSortOrder == 'asc') {
+          tmpSortOrder = 'desc';
+        } else if (!tmpSortOrder){
+          tmpSortOrder = 'desc';
+        }else{
+          tmpSortOrder = 'asc';
+        }
+        this.setData({
+          currentSortType: 'price',
+          order: tmpSortOrder
+        });
+        this.getGoodsList();
+        break;
+      default:
+        //综合排序
+        this.setData({
+          currentSortType: 'default',
+          order:'',
+          id:''
+        });
+        this.getGoodsList();
+    }
+  },
+  selectCategory: function (e) {
+    console.log(e)
+    let id = e.currentTarget.dataset.id;
+    this.setData({
+      'categoryFilter': false,
+      'id': id
+    });
+    this.getGoodsList();
+
+  },
+
+
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    this.getBanner();
+    // this.getBanner();
     this.getGoodsList();
   },
   onReady: function () {
@@ -61,50 +125,4 @@ Page({
     // 页面关闭
 
   },
-  openSortFilter: function (event) {
-    let currentId = event.currentTarget.id;
-    switch (currentId) {
-      case 'categoryFilter':
-        this.setData({
-          categoryFilter: !this.data.categoryFilter,
-          currentSortType: 'category',
-          currentSort: 'add_time',
-          currentSortOrder: 'desc'
-        });
-        break;
-      case 'priceSort':
-        let tmpSortOrder = 'asc';
-        if (this.data.currentSortOrder == 'asc') {
-          tmpSortOrder = 'desc';
-        }
-        this.setData({
-          currentSortType: 'price',
-          currentSort: 'retail_price',
-          currentSortOrder: tmpSortOrder,
-          categoryFilter: false
-        });
-
-        this.getGoodsList();
-        break;
-      default:
-        //综合排序
-        this.setData({
-          currentSortType: 'default',
-          currentSort: 'add_time',
-          currentSortOrder: 'desc',
-          categoryFilter: false,
-          categoryId: 0
-        });
-        this.getGoodsList();
-    }
-  },
-  selectCategory: function (event) {
-    let currentIndex = event.target.dataset.categoryIndex;
-    this.setData({
-      'categoryFilter': false,
-      'categoryId': this.data.filterCategory[currentIndex].id
-    });
-    this.getGoodsList();
-
-  }
 })

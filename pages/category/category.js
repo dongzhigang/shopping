@@ -29,7 +29,13 @@ Page({
         if (res.code == 0) {
           _that.setData({
             currentList: res.data.currentList,
+            currenName: res.data.sortFind.Sort_name,
+            currenDocs: res.data.sortFind.docs
           })
+          //当id是分类id时，这里需要重新设置成分类的一个子分类的id
+          if (_that.data.id == res.data.cateFind.Cate_id){
+            _that.setData({ id: res.data.sortFind.Sort_id})
+          }
           _that.productList();
           wx.hideLoading();
         }
@@ -54,9 +60,6 @@ Page({
         if (res.code == 0) {
           _that.setData({
             productList: res.data.productList,
-            sortId: res.data.sortFind.id,
-            currenName: res.data.sortFind.Sort_name,
-            currenDocs: res.data.sortFind.docs
           })
         }
         wx.hideLoading();
@@ -66,26 +69,19 @@ Page({
   //选择分类
   switchCate:function(e){
     let id = e.currentTarget.dataset.id;
-    let sortId = e.currentTarget.dataset.sortid;
-    let name = e.currentTarget.dataset.name;
-    let docs = e.currentTarget.dataset.docs;
-    console.log(e)
-    if (sortId == this.data.sortId) {
+    if (id == this.data.id) {
       return;
     }
     this.setData({
       id: id,
-      sortId: sortId,
-      currenName:name,
-      currenDocs:docs
     });
-    this.productList();
+    this.categoryList();
   },
 
   // 页面渲染
   onLoad: function (options) {
     let id = options.id;
-    let sortId = options.sortId;
+    let sortId = options.sortId || '';
     let title = options.title;
     wx.setNavigationBarTitle({
       title: title

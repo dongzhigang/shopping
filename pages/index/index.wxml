@@ -8,7 +8,7 @@
   </swiper>
   <!-- 分类 -->
   <view class="m-menu">
-    <navigator class="item" url="/pages/category/category?id={{item.id}}&title={{item.Cate_name}}" wx:for="{{channel}}" wx:key="index" >
+    <navigator class="item" url="/pages/category/category?id={{item.Cate_id}}&title={{item.Cate_name}}" wx:for="{{channel}}" wx:key="index" >
       <image src="{{path}}{{item.icon}}" background-size="cover"></image>
       <text>{{item.Cate_name}}</text>
     </navigator>
@@ -153,7 +153,7 @@
         </view>
         </block>
         <view class="item item-more">
-        <navigator url="/pages/category/category?id={{item.id}}&title={{item.name}}" class="more-a">
+        <navigator url="/pages/category/category?id={{item.Cate_id}}&title={{item.name}}" class="more-a">
           <view class="txt">{{'更多'+item.name+'好物'}}</view>
           <image class="icon" src="../../static/images/icon_go_more.png" background-size="cover"></image>
         </navigator>

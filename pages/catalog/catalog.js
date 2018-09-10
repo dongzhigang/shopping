@@ -37,11 +37,10 @@ Page({
   },
   //选择分类
   switchCate:function(e){
-    console.log(e.currentTarget.dataset.id)
     let id = e.currentTarget.dataset.id;
     let _that = this;
     let url = api.CatalogCurrent;
-    let data = {id:id};
+    let data = { Cate_id: id};
     util.showLoading(function () {
       util.request(url, data).then(function (res) {
         console.log(res)
@@ -49,7 +48,7 @@ Page({
           _that.setData({
             id: res.data.findCate.id,
             cateImg: res.data.findCate.img,
-            cateName: res.data.findCate.cate_name,
+            cateName: res.data.findCate.Cate_name,
             cateDocs: res.data.findCate.docs,
             sortList: res.data.sortList
           })

@@ -9,7 +9,7 @@
   <view class="catalog">
     <scroll-view class="nav" scroll-y="true">
         <view class="item {{id == item.id?'active':''}}" wx:for="{{cateList}}" wx:key="index" 
-          data-id='{{item.id}}' bindtap='switchCate'>
+          data-id='{{item.Cate_id}}' bindtap='switchCate'>
           {{item.Cate_name}}
         </view>
     </scroll-view>
@@ -24,7 +24,7 @@
             <text class="line"></text>
         </view>
         <view class="bd">
-            <navigator url="/pages/category/category?id={{id}}&sortId={{item.id}}&title={{cateName}}" class="item {{(index+1) % 3 == 0 ? 'last' : ''}}" 
+            <navigator url="/pages/category/category?id={{item.Sort_id}}&title={{cateName}}" class="item {{(index+1) % 3 == 0 ? 'last' : ''}}" 
               wx:for="{{sortList}}" wx:key="index">
                 <image class="icon" src="{{path}}{{item.img}}"></image>
                 <text class="txt">{{item.Sort_name}}</text>

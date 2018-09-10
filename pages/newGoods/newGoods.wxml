@@ -16,24 +16,26 @@
       <view class="item {{currentSortType == 'default' ? 'active' : ''}}"  bindtap="openSortFilter" id="defaultSort">
         <text class="txt">综合</text>
       </view>
-      <view class="item by-price {{currentSortType == 'price' ? 'active' : ''}} {{currentSortOrder == 'asc'  ? 'asc' : 'desc'}}" bindtap="openSortFilter" id="priceSort">
+      <view class="item by-price {{currentSortType == 'price' ? 'active' : ''}} {{order == 'asc'  ? 'asc' : 'desc'}}" bindtap="openSortFilter" id="priceSort">
         <text class="txt">价格</text>
       </view>
-      <view class="item active" bindtap="openSortFilter" id="categoryFilter">
+      <view class="item {{currentSortType == 'category' ? 'active' : ''}}" bindtap="openSortFilter" id="categoryFilter">
         <text class="txt">分类</text>
       </view>
     </view>
     <view class="sort-box-category" wx-if="{{categoryFilter}}">
-      <view class="item active" bindtap="selectCategory">紧急</view>
+      <view class="item active" bindtap="selectCategory" wx:for="{{fieldSortList}}" wx:key="index" data-id="{{item.Sort_id}}">
+        {{item.Sort_name}}
+      </view>
     </view>
   </view>
   <view class="cate-item">
     <view class="b">
-      <block >
-        <navigator class="item item-b" url="../goods/goods?id={{iitem.id}}">
-          <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
-          <text class="name">{{iitem.name}}</text>
-          <text class="price">￥{{iitem.retailPrice}}</text>
+      <block wx:for="{{goodsList}}" wx:key="index">
+        <navigator class="item item-b" url="../goods/goods?id={{item.id}}">
+          <image class="img" src="{{path+item.img}}" background-size="cover"></image>
+          <text class="name">{{item.name}}</text>
+          <text class="price">￥{{item.at_price}}</text>
         </navigator>
       </block>
     </view>
