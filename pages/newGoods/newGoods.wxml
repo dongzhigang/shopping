@@ -24,7 +24,7 @@
       </view>
     </view>
     <view class="sort-box-category" wx-if="{{categoryFilter}}">
-      <view class="item active" bindtap="selectCategory" wx:for="{{fieldSortList}}" wx:key="index" data-id="{{item.Sort_id}}">
+      <view class="item {{index === newIndex?'active':''}}" bindtap="selectCategory" wx:for="{{fieldSortList}}" wx:key="index" data-id="{{item.Sort_id}}" data-index="{{index}}">
         {{item.Sort_name}}
       </view>
     </view>

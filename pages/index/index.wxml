@@ -78,7 +78,7 @@
     </view>
     <view class="b">
       <view class="item" wx:for="{{newGoods}}" wx:key="index">
-        <navigator url="../goods/goods?id={{item.id}}">
+        <navigator url="../goods/goods?id={{item.product_id}}">
           <image class="img" src="{{path}}{{item.img}}" background-size="cover"></image>
           <text class="name">{{item.name}}</text>
           <text class="price">￥{{item.at_price}}</text>
@@ -97,7 +97,7 @@
     </view>
     <view class="b">
       <view class="item" wx:for="{{hotGoods}}" wx:key="index">
-      <navigator url="/pages/goods/goods?id={{item.id}}">
+      <navigator url="/pages/goods/goods?id={{item.product_id}}">
         <image class="img" src="{{path}}{{item.img}}" background-size="cover"></image>
         <view class="right">
         <view class="text">
@@ -144,8 +144,8 @@
       </view>
       <view class="b">
         <block wx:for="{{item.list}}" wx:for-item="col" wx:key="i">
-        <view class="item {{item.list.length % 2 == 0 ? '' : 'item-b'}}">
-          <navigator url="../goods/goods?id={{col.id}}" class="a">
+        <view class="item {{index % 2 == 0 ? '' : 'item-b'}}">
+          <navigator url="../goods/goods?id={{col.product_id}}" class="a">
             <image class="img" src="{{path+col.img}}" background-size="cover"></image>
             <text class="name">{{col.name}}</text>
             <text class="price">￥{{col.at_price}}</text>

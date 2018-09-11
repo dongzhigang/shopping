@@ -12,8 +12,9 @@ Page({
     goodsimgs:[],                    //商品主图
     productInfo:[],                  //商品信息
     Property:[],                     //商品属性
-    answer:[],
+    answer: [],                      //常见问题
     num:0,                           //商品数量
+    count:0,                         //评论数量
   },
   /**
    * 事件
@@ -23,7 +24,7 @@ Page({
     let _that = this;
     let url = api.GoodsDetail;
     let data = {
-      'id':this.data.id
+      'product_id':this.data.id
     }
     util.showLoading(function () {
       util.request(url, data, 'POST').then(function (res) {
@@ -34,11 +35,25 @@ Page({
             productInfo: res.data.productInfo,
             property: res.data.property,
             parameter: res.data.parameter,
-            answer: res.data.answer
+            answer: res.data.answer,
+            commentlist: res.data.commentlist
           })
+          _that.getCount();
           wx.hideLoading();
         }
       });
+    })
+  },
+  //获取评论总数
+  getCount:function(){
+    let _that = this;
+    let url = api.CommentCount;
+    let data = {
+      'product_id': this.data.id
+    }
+    util.request(url,data).then(function(res){
+      console.log(res)
+      _that.setData({count:res.data})
     })
   },
   //选择规格切换

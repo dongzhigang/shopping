@@ -1,25 +1,27 @@
 <!-- 评价列表 -->
 <view class="comments">
     <view class="h">
-        <view class="item active" bindtap="switchTab">
-            <view class="txt">全部(0)</view>
+        <view class="item {{index==0?'active':''}}" bindtap="switchTab" data-index='0'>
+            <view class="txt">全部({{count}})</view>
         </view>
-        <view class="item active" bindtap="switchTab">
+        <view class="item {{index==1?'active':''}}" bindtap="switchTab" data-index='1'>
             <view class="txt">有图(0)</view>
         </view>
     </view>
   <view class="b">
-    <view class="item" >
+    <view class="item" wx:for="{{commentlist}}" wx:key="index" >
       <view class="info">
         <view class="user">
-          <image src="/static/images/8.jpg"></image>
-          <text>帆帆</text>
+          <image src="{{path+item.list.imgUrl}}"></image>
+          <text>{{item.list.userName}}</text>
         </view>
-        <view class="time">2018-12-01</view>
+        <view class="time">{{item.list.add_date}}</view>
       </view>
-      <view class="comment">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
-      <view class="imgs" >
-        <image class="img" src="/static/images/8.jpg"></image>
+      <view class="comment">{{item.list.content}}</view>
+      <view class="imgs" wx:if="{{item.img.length>0}}" >
+        <block wx:for="{{item.img}}" wx:for-item="col" wx:key="i">
+        <image class="img" src="{{path+col.pathUrl}}"></image>
+        </block>
       </view>
       <view class="spec">
         <!-- <text class="item">白色 2件</text> -->

@@ -13,6 +13,7 @@ Page({
     id:'',                            //子分类id
     page: 1,
     rows: 100,
+    newIndex:'',
 
     bannerInfo: {                     //新品海报
       'imgUrl': '',
@@ -45,7 +46,7 @@ Page({
     }
     //分类
     if(this.data.id){
-      data.id = this.data.id
+      data.Sort_id = this.data.id
     }
     util.request(url, data).then(function (res) {
         console.log(res)
@@ -57,6 +58,7 @@ Page({
         }
       });
   },
+  //展示分类
   openSortFilter: function (e) {
     let currentId = e.currentTarget.id;
     switch (currentId) {
@@ -79,7 +81,8 @@ Page({
         }
         this.setData({
           currentSortType: 'price',
-          order: tmpSortOrder
+          order: tmpSortOrder,
+          categoryFilter: false,
         });
         this.getGoodsList();
         break;
@@ -87,23 +90,26 @@ Page({
         //综合排序
         this.setData({
           currentSortType: 'default',
+          categoryFilter: false,
           order:'',
-          id:''
+          id:'',
+          newIndex: '',
         });
         this.getGoodsList();
     }
   },
+  //选择分类
   selectCategory: function (e) {
     console.log(e)
     let id = e.currentTarget.dataset.id;
+    let index = e.currentTarget.dataset.index;
     this.setData({
-      'categoryFilter': false,
-      'id': id
+      id: id,
+      newIndex:index,
+      categoryFilter: !this.data.categoryFilter
     });
     this.getGoodsList();
-
   },
-
 
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数

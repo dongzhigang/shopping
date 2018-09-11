@@ -59,11 +59,27 @@ Page({
       });
     })
   },
+  //商品总数
+  productCount:function(){
+    let _that = this;
+    let url = api.GoodsCount;
+    util.request(url).then(function (res) {
+      console.log(res)
+      if (res.code == 0) {
+        _that.setData({
+          Count:res.data
+        })
+      }
+    }).catch(function (err) {
+      console.log(err)
+    });
+  },
   /**
    * 生命周期
    */
  onLoad: function(options) {
    this.catalogList();
+   this.productCount();
  },
  onReady: function() {
   // 页面渲染完成

@@ -13,27 +13,29 @@
   </view>
   <view class="sort">
     <view class="sort-box">
-      <view class="item active"  bindtap="openSortFilter" id="defaultSort">
+      <view class="item {{currentSortType == 'default' ? 'active' : ''}}"  bindtap="openSortFilter" id="defaultSort">
         <text class="txt">综合</text>
       </view>
-      <view class="item by-price {{currentSortType == 'price' ? 'active' : ''}} {{currentSortOrder == 'asc'  ? 'asc' : 'desc'}}" bindtap="openSortFilter" id="priceSort">
+      <view class="item by-price {{currentSortType == 'price' ? 'active' : ''}} {{order == 'asc'  ? 'asc' : 'desc'}}" 
+        bindtap="openSortFilter" id="priceSort">
         <text class="txt">价格</text>
       </view>
       <view class="item {{currentSortType == 'category' ? 'active' : ''}}" bindtap="openSortFilter" id="categoryFilter">
         <text class="txt">分类</text>
       </view>
     </view>
-    <view class="sort-box-category" >
-      <view class="item {{item.checked ? 'active' : ''}}" bindtap="selectCategory">很好</view>
+    <view class="sort-box-category" wx-if="{{categoryFilter}}">
+      <view class="item {{newIndex === index ? 'active' : ''}}" bindtap="selectCategory" data-id="{{item.Sort_id}}" 
+        data-index="{{index}}" wx:for="{{fieldSortList}}" wx:key="index">{{item.Sort_name}}</view>
     </view>
   </view>
   <view class="cate-item">
     <view class="b">
-      <block >
-        <navigator class="item {{iindex % 2 == 0 ? 'item-b' : '' }}" url="../goods/goods">
-          <image class="img" src="/static/images/8.jpg" background-size="cover"></image>
-          <text class="name">哈哈哈</text>
-          <text class="price">￥55</text>
+      <block wx:for="{{goodsList}}" wx:key="index">
+        <navigator class="item {{index % 2 == 0 ? 'item-b' : '' }}" url="../goods/goods?id={{item.id}}">
+          <image class="img" src="{{path+item.img}}" background-size="cover"></image>
+          <text class="name">{{item.name}}</text>
+          <text class="price">￥{{item.at_price}}</text>
         </navigator>
       </block>
     </view>

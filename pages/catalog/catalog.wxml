@@ -3,7 +3,7 @@
   <view class="search">
     <navigator url="/pages/search/search" class="input">
       <image class="icon"></image>
-      <text class="txt">商品搜索, 共0款好物 </text>
+      <text class="txt">商品搜索, 共{{Count}}款好物 </text>
     </navigator>
   </view>
   <view class="catalog">

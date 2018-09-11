@@ -1,12 +1,10 @@
 // 以下是业务服务器API地址
 // 本机开发时使用
-var WxApiRoot = 'http://192.168.1.22/';
+// var WxApiRoot = 'http://127.0.0.1/';
 // 局域网测试使用
-// var WxApiRoot = 'http://192.168.0.101:8080/wx/';
+let WxApiRoot = 'http://192.168.1.22/';
 // 云平台部署时使用
-// var WxApiRoot = 'http://122.152.206.172:8080/wx/';
 // 云平台上线时使用
-// var WxApiRoot = 'https://www.menethil.com.cn/wx/';
 
 module.exports = {
   WxApiRoot: WxApiRoot,
@@ -21,7 +19,7 @@ module.exports = {
   AuthRegisterCaptcha: WxApiRoot + 'auth/regCaptcha', //验证码
   AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号
 
-  GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
+  GoodsCount: WxApiRoot + 'shoppingAdmin/index/Product/productCount', //统计商品总数
   GoodsList: WxApiRoot + 'shoppingAdmin/index/Product/productList', //获得商品列表
   GoodsCategory: WxApiRoot + 'shoppingAdmin/index/Product/currentList', //获得分类数据
   GoodsDetail: WxApiRoot + 'shoppingAdmin/index/product/getProductInfo', //获得商品的详情
@@ -44,15 +42,15 @@ module.exports = {
   CollectList: WxApiRoot + 'collect/list', //收藏列表
   CollectAddOrDelete: WxApiRoot + 'collect/addordelete', //添加或取消收藏
 
-  CommentList: WxApiRoot + 'comment/list', //评论列表
-  CommentCount: WxApiRoot + 'comment/count', //评论总数
+  CommentList: WxApiRoot + 'shoppingAdmin/index/Comments/commentList', //评论列表
+  CommentCount: WxApiRoot + 'shoppingAdmin/index/Comments/commentCount', //评论总数
   CommentPost: WxApiRoot + 'comment/post', //发表评论
 
   TopicList: WxApiRoot + 'topic/list', //专题列表
   TopicDetail: WxApiRoot + 'topic/detail', //专题详情
   TopicRelated: WxApiRoot + 'topic/related', //相关专题
 
-  SearchIndex: WxApiRoot + 'search/index', //搜索关键字
+  SearchIndex: WxApiRoot + 'shoppingAdmin/index/Keyword/hotKeyword', //搜索关键字
   SearchResult: WxApiRoot + 'search/result', //搜索结果
   SearchHelper: WxApiRoot + 'search/helper', //搜索帮助
   SearchClearHistory: WxApiRoot + 'search/clearhistory', //搜索历史清楚
