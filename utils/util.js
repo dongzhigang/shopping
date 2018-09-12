@@ -66,7 +66,7 @@ function showToast(msg){
   wx.showToast({
     title: msg,
     icon: 'success',
-    duration: 2000
+    duration: 1000
   })
 }
 /**

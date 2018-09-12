@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 14,
 			"list": [
 				{
 					"id": -1,
@@ -123,16 +123,18 @@
 					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "购物车",
 					"pathName": "pages/cart/cart",
-					"query": ""
+					"query": "user_id=1",
+					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 15,
 					"name": "下单",
-					"pathName": "pages/shopping/checkout/checkout",
-					"query": ""
+					"pathName": "pages/checkout/checkout",
+					"query": "",
+					"scene": "1001"
 				},
 				{
 					"id": -1,

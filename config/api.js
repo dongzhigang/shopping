@@ -30,7 +30,7 @@ module.exports = {
   BrandList: WxApiRoot + 'shoppingAdmin/index/Brands/brandList', //品牌列表
   BrandDetail: WxApiRoot + 'shoppingAdmin/index/Brands/brandInfo', //品牌详情
 
-  CartList: WxApiRoot + 'cart/index', //获取购物车的数据
+  CartList: WxApiRoot + 'shoppingAdmin/index/Shopcar/carList', //获取购物车的数据
   CartAdd: WxApiRoot + 'cart/add', // 添加商品到购物车
   CartFastAdd: WxApiRoot + 'cart/fastadd', // 立即购买商品
   CartUpdate: WxApiRoot + 'cart/update', // 更新购物车的商品

@@ -34,6 +34,9 @@ Page({
             newGoods: res.data.newProduct,
           })
           wx.hideLoading();
+        }else{
+          wx.hideLoading();
+          util.showToast(res.msg)
         }
       }).catch(function(err){
         console.log(err)

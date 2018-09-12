@@ -36,7 +36,7 @@
         <view class="counterPrice">原价：￥{{productInfo.shop_price}}</view>
         <view class="retailPrice">现价：￥{{productInfo.at_price}}</view>
       </view>
-      <view class="brand">
+      <view class="brand" wx:if="{{productInfo.brand_name}}">
         <navigator url="../brandDetail/brandDetail?id={{productInfo.brand_id}}">
           <text>{{productInfo.brand_name}}</text>
         </navigator>
@@ -56,20 +56,20 @@
         <text class="i">查看全部</text>
       </navigator>
     </view>
-    <view class="b">
+    <view class="b" wx:if="{{commentlist}}">
       <view class="item">
         <view class="info">
           <view class="user">
-            <image src="{{path + commentlist.list.imgUrl}}"></image>
-            <text>{{commentlist.list.userName}}</text>
+            <image src="{{path + commentlist.user.imgUrl}}"></image>
+            <text>{{commentlist.user.userName}}</text>
           </view>
-          <view class="time">{{commentlist.list.add_date}}</view>
+          <view class="time">{{commentlist.add_date}}</view>
         </view>
         <view class="content">
-          {{commentlist.list.content}}
+          {{commentlist.content}}
         </view>
-        <view class="imgs" wx:if="{{commentlist.img.length}}">
-          <block wx:for="{{commentlist.img}}" wx:for-item="col" wx:key="i">
+        <view class="imgs" wx:if="{{commentlist.comment_img.length}}">
+          <block wx:for="{{commentlist.comment_img}}" wx:for-item="col" wx:key="i">
             <image class="img"  src="{{path +col.pathUrl }}"></image>
           </block>
         </view>

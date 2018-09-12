@@ -53,7 +53,7 @@ Page({
     }
     util.request(url,data).then(function(res){
       console.log(res)
-      _that.setData({count:res.data})
+      _that.setData({count:res.data.count})
     })
   },
   //选择规格切换

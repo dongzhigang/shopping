@@ -1,55 +1,58 @@
 <view class="container">
-  <view class="no-login">
+  <view class="no-login" wx:if="{{hasLogin}}">
     <view class="c">
-      <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
+      <image src="/static/images/noCart.png" />
       <text>还没有登录</text>
       <button style="background-color:#A9A9A9"  bindtap="goLogin">去登录</button>
     </view>
   </view>
-  <view class='login'>
+  <view class='login' wx:else>
     <view class="service-policy">
       <view class="item">30天无忧退货</view>
       <view class="item">48小时快速退款</view>
       <view class="item">满88元免邮费</view>
     </view>
-    <view class="no-cart" >
+    <view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
       <view class="c">
-        <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
+        <image src="/static/images/noCart.png" />
         <text>去添加点什么吧</text>
       </view>
     </view>
-    <view class="cart-view">
+    <view class="cart-view" wx:else>
       <view class="list">
         <view class="group-item">
           <view class="goods">
-            <view class="item edit" >
-              <view class="checkbox checked" bindtap="checkedItem" ></view>
-              <view class="cart-goods">
-                <image class="img" src="/static/images/8.jpg"></image>
-                <view class="info">
-                  <view class="t">
-                    <text class="name">名称</text>
-                    <text class="num">x数量</text>
-                  </view>
-                  <view class="attr">已选择</view>
-                  <view class="b">
-                    <text class="price">￥12</text>
-                    <view class="selnum">
-                      <view class="cut" bindtap="cutNumber" >-</view>
-                      <input value="" class="number"type="number" />
-                      <view class="add" bindtap="addNumber">+</view>
+            <block wx:for="{{cartGoods}}" wx:key="index">
+              <view class="item {{item.checked ?'edit':''}}" >
+                <view class="checkbox  {{item.checked ? 'checked' : ''}}" bindtap="checkedItem" 
+                  data-index='{{index}}' ></view>
+                <view class="cart-goods">
+                  <image class="img" src="{{path + item.product_msg.img}}"></image>
+                  <view class="info">
+                    <view class="t">
+                      <text class="name">{{item.product_msg.name}}</text>
+                      <text class="num">x{{item.num}}</text>
+                    </view>
+                    <view class="attr">{{item.checked ?'已选择':''}}{{item.product_msg.name}}</view>
+                    <view class="b">
+                      <text class="price">￥{{price || item.product_msg.at_price}}</text>
+                      <view class="selnum">
+                        <view class="cut" bindtap="cutNumber" data-num='{{item.num}}' data-index='{{index}}' >-</view>
+                        <input value="{{cartStatus[index].num}}" disabled class="number"type="number" />
+                        <view class="add" bindtap="addNumber" data-num='{{item.num}}'>+</view>
+                      </view>
                     </view>
                   </view>
                 </view>
               </view>
-            </view>
+            </block>
           </view>
         </view>
 
       </view>
       <view class="cart-bottom">
-        <view class="checkbox {{checkedAllStatus ? 'checked' : ''}}" bindtap="checkedAll">全选(0)</view>
-        <view class="total">￥22</view>
+        <view class="checkbox {{checkedAll ? 'checked' : ''}}" bindtap="checkedAll">全选({{selectNumber}})</view>
+        <view class="total">￥{{totalPrice}}</view>
         <view class='action_btn_area'>
           <view class="{{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
           <view class="delete" bindtap="deleteCart" wx:if="{{isEditCart}}">删除({{cartTotal.checkedGoodsCount}})</view>

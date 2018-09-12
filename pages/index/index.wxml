@@ -7,8 +7,9 @@
     </swiper-item>
   </swiper>
   <!-- 分类 -->
-  <view class="m-menu">
-    <navigator class="item" url="/pages/category/category?id={{item.Cate_id}}&title={{item.Cate_name}}" wx:for="{{channel}}" wx:key="index" >
+  <view class="m-menu" wx:if="{{channel.length}}">
+    <navigator class="item" url="/pages/category/category?id={{item.Cate_id}}&title={{item.Cate_name}}" 
+      wx:for="{{channel}}" wx:key="index" >
       <image src="{{path}}{{item.icon}}" background-size="cover"></image>
       <text>{{item.Cate_name}}</text>
     </navigator>
@@ -46,7 +47,7 @@
     </view>
   </view> -->
   <!-- 品牌制造商直供 -->
-  <view class="a-section a-brand">
+  <view class="a-section a-brand" wx:if="{{brands.length}}">
     <view class="h">
       <navigator url="../brand/brand">
       <text class="txt">品牌制造商直供</text>
@@ -68,7 +69,7 @@
     </view>
   </view>
   <!-- 新品首发 -->
-  <view class="a-section a-new">
+  <view class="a-section a-new" wx:if="{{newGoods.length}}">
     <view class="h">
       <view>
       <navigator url="../newGoods/newGoods">
@@ -87,7 +88,7 @@
     </view>
   </view>
   <!-- 人气推荐 -->
-  <view class="a-section a-popular">
+  <view class="a-section a-popular" wx:if="{{hotGoods.length}}">
     <view class="h">
       <view>
       <navigator url="../hotGoods/hotGoods">
@@ -135,15 +136,15 @@
     </view>
   </view> -->
   <!-- 分类列表 -->
-  <view class="good-grid" >
+  <view class="good-grid" wx:if="{{productList.length}}">
     <block wx:for="{{productList}}" wx:key="index">
       <view class="h">
         <view>
-        <text>{{item.name}}</text>
+        <text>{{item.Cate_name}}</text>
         </view>
       </view>
       <view class="b">
-        <block wx:for="{{item.list}}" wx:for-item="col" wx:key="i">
+        <block wx:for="{{item.product_msg}}" wx:for-item="col" wx:key="i">
         <view class="item {{index % 2 == 0 ? '' : 'item-b'}}">
           <navigator url="../goods/goods?id={{col.product_id}}" class="a">
             <image class="img" src="{{path+col.img}}" background-size="cover"></image>
@@ -154,7 +155,7 @@
         </block>
         <view class="item item-more">
         <navigator url="/pages/category/category?id={{item.Cate_id}}&title={{item.name}}" class="more-a">
-          <view class="txt">{{'更多'+item.name+'好物'}}</view>
+          <view class="txt">{{'更多'+item.Cate_name+'好物'}}</view>
           <image class="icon" src="../../static/images/icon_go_more.png" background-size="cover"></image>
         </navigator>
         </view>
