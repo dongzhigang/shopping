@@ -33,13 +33,13 @@
                       <text class="name">{{item.product_msg.name}}</text>
                       <text class="num">x{{item.num}}</text>
                     </view>
-                    <view class="attr">{{item.checked ?'已选择':''}}{{item.product_msg.name}}</view>
+                    <view class="attr">{{item.checked ?'已选择':''}}{{item.product_msg.value||''}}</view>
                     <view class="b">
                       <text class="price">￥{{price || item.product_msg.at_price}}</text>
                       <view class="selnum">
                         <view class="cut" bindtap="cutNumber" data-num='{{item.num}}' data-index='{{index}}' >-</view>
-                        <input value="{{cartStatus[index].num}}" disabled class="number"type="number" />
-                        <view class="add" bindtap="addNumber" data-num='{{item.num}}'>+</view>
+                        <input value="{{item.num}}" disabled class="number"type="number" />
+                        <view class="add" bindtap="addNumber" data-num='{{item.num}}' data-index='{{index}}'>+</view>
                       </view>
                     </view>
                   </view>
@@ -54,8 +54,10 @@
         <view class="checkbox {{checkedAll ? 'checked' : ''}}" bindtap="checkedAll">全选({{selectNumber}})</view>
         <view class="total">￥{{totalPrice}}</view>
         <view class='action_btn_area'>
-          <view class="{{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
-          <view class="delete" bindtap="deleteCart" wx:if="{{isEditCart}}">删除({{cartTotal.checkedGoodsCount}})</view>
+          <view class="{{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart" id="edit">
+            {{!isEditCart ? '编辑' : '完成'}}
+          </view>
+          <view class="delete" bindtap="editCart" wx:if="{{isEditCart}}" id="del">删除({{selectNumber}})</view>
           <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
           <!-- </view>  -->
         </view>

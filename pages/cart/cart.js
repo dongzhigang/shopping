@@ -10,57 +10,140 @@ Page({
    cartStatus:[],               //选择状态数据
    isEditCart:false,            //编辑和完成切换
    price:0,                     //价格
-   totalPrice:0,               //总价
+   totalPrice:0,                //总价
    checkedAll:false,            //全选
-   selectNumber:0,              //选择个数              
+   selectNumber:0,              //选择个数
+   arrayId:[],                  //保存更新的id
+   arrayNum: [],                //保存更新的num
  },
  /**
   * 事件
   */
-//列表
+//查询列表
 cartList:function(){
   let _that = this;
   let url = api.CartList;
   let data = { 'user_id': this.data.user_id};
+  util.showLoading(function(){
+    util.request(url, data).then(function (res) {
+      console.log(res)
+      if (res.code == 0) {
+        _that.setData({
+          cartGoods: res.data,
+          cartStatus: res.data,           //状态数据
+        })
+      }
+      wx.hideLoading();
+    })
+  })  
+},
+//更新购物车
+updateCart:function(){
+  let arrayId = this.data.arrayId.join();
+  let arrayNum = this.data.arrayNum.join();
+  let url = api.CartUpdate;
+  let data = { 'id': arrayId, 'num': arrayNum};
   util.request(url,data).then(function(res){
-    console.log(res)
     if(res.code == 0){
-      _that.setData({
-        cartGoods:res.data,
-        cartStatus: res.data,           //状态数据
-      })
+      util.showToast(res.msg);
+    }else{
+      util.showToast(res.msg)
     }
   })
+  //清空id，num
+  this.setData({
+    arrayId:[],
+    arrayNum:[]
+  })
 },
-//保存购物车
-addCarts:function(){
-
+//删除购物车
+deleteCart:function(){
+  let cartGoods = this.data.cartGoods;
+  let arrayId = this.data.arrayId.join();
+  let url = api.CartDelete;
+  let data = { 'id': arrayId};
+  let _that = this;
+  util.request(url, data).then(function (res) {
+    if (res.code == 0) {
+      util.showToast(res.msg)
+      setTimeout(function(){
+        _that.onShow()
+      },1000)
+    } else {
+      util.showToast(res.msg)
+    }
+  })
+  //清空id，num
+  this.setData({
+    arrayId: [],
+    arrayNum: []
+  })
 },
 //编辑
-editCart:function(){
-  this.setData({ 
-    isEditCart: !this.data.isEditCart,
-    hasSele: !this.data.hasSele    
-  })
+editCart:function(e){
+  let id = e.currentTarget.id;
+  let cartGoods = this.data.cartGoods;
+  if (this.data.isEditCart){
+    cartGoods.map(function (v, i) {
+      v.checked = false;
+    })
+    this.setData({
+      cartGoods: cartGoods,
+      isEditCart: !this.data.isEditCart
+    })
+    
+    switch(id){
+      case "edit":
+        //更新购物车
+        this.updateCart();
+      break;
+      case "del":
+        //删除购物车
+        this.deleteCart();
+      break;
+    }
+    //调用全选函数，全部初始化
+    if (this.data.checkedAll) {
+      this.checkedAll();
+    }
+    return;
+  }
+  //调用全选函数，全部初始化
+  this.checkedAll();
 },
 //选择
 checkedItem:function(e){
   let index = e.currentTarget.dataset.index;
   let cartGoods = this.data.cartGoods;
+  let selectNumber = this.data.selectNumber;
+  let totalPrice = this.data.totalPrice;
+  let arrayId = this.data.arrayId;
+  let arrayNum = this.data.arrayNum;
   cartGoods.map(function (v, i) {
     if (i == index) {
       if (v.checked){
         v.checked = false;
+        selectNumber -= 1;
+        totalPrice -= v.num * parseInt(v.product_msg.at_price);
+        arrayId.splice(i, 1);
+        arrayNum.splice(i, 1);
         return;
       }
       v.checked = true;
+      selectNumber+=1;
+      totalPrice += v.num * parseInt(v.product_msg.at_price);
+      arrayId.splice(i, 0, v.cart_id);
+      arrayNum.splice(i, 0, v.num);
     } 
-
   })
   this.setData({
     cartGoods: cartGoods,
     isEditCart: this.isEditCart(),
-    checkedAll: this.hasCheckedAll()
+    checkedAll: this.hasCheckedAll(),
+    selectNumber: selectNumber,
+    totalPrice: totalPrice,
+    arrayId: arrayId,
+    arrayNum: arrayNum
   });
 },
 //全选
@@ -68,25 +151,34 @@ checkedAll:function(){
   let cartGoods = this.data.cartGoods;
   let selectNumber = this.data.selectNumber;
   let totalPrice = this.data.totalPrice;
+  let arrayId = this.data.arrayId;
+  let arrayNum = this.data.arrayNum;
   if (this.data.checkedAll){
     cartGoods.map(function (v, i) {
       v.checked = false;
     })
     selectNumber=0;
-    totalPrice=0
+    totalPrice=0;
+    arrayId = [];
+    arrayNum = [];
 
   }else{
     cartGoods.map(function (v, i) {
       v.checked = true;
       selectNumber = i+1;
-      totalPrice += parseInt(v.product_msg.at_price);
+      totalPrice += v.num*parseInt(v.product_msg.at_price);
+      arrayId.push(v.cart_id);
+      arrayNum.push(v.num);
     })
   }
   this.setData({
     cartGoods: cartGoods,
     checkedAll: this.hasCheckedAll(),
     selectNumber: selectNumber,
-    totalPrice: totalPrice
+    totalPrice: totalPrice,
+    arrayId: arrayId,
+    arrayNum: arrayNum,
+    isEditCart: this.isEditCart()
   })
 },
 //判断是否有选择商品
@@ -112,27 +204,48 @@ hasCheckedAll:function(){
 },
 //数量减少
 cutNumber:function(e){
-  console.log(e)
   let index = e.currentTarget.dataset.index;
   let num = e.currentTarget.dataset.num;
-  let cartStatus = this.data.cartStatus;
+  let cartGoods = this.data.cartGoods;
+  let arrayNum = this.data.arrayNum;
+  let totalPrice = this.data.totalPrice;
   num-=1;
   if (num < 0){
     return;
   }
-  cartStatus.map(function(v,i){
+  cartGoods.map(function(v,i){
     if(index == i){
-      v.num = num
+      v.num = num;
+      totalPrice -= parseInt(v.product_msg.at_price);
+      arrayNum.splice(i, 1, v.num);
     }
   })
-  this.setData({ cartStatus: cartStatus})
+  this.setData({ cartGoods: cartGoods, totalPrice: totalPrice, arrayNum: arrayNum})
+},
+//数量添加
+addNumber:function(e){
+  let index = e.currentTarget.dataset.index;
+  let num = e.currentTarget.dataset.num;
+  let cartGoods = this.data.cartGoods;
+  let arrayNum = this.data.arrayNum;
+  let totalPrice = this.data.totalPrice;
+  num += 1;
+  cartGoods.map(function (v, i) {
+    if (index == i) {
+      v.num = num;
+      totalPrice += parseInt(v.product_msg.at_price);
+      arrayNum.splice(i, 1, v.num);
+    }
+  })
+  this.setData({ cartGoods: cartGoods, totalPrice: totalPrice, arrayNum: arrayNum })
 },
 
-
-
+/**
+ * 生命周期
+ */
 onLoad: function(options) {
 // 页面初始化 options为页面跳转所带来的参数
-  let user_id = options.user_id;
+  let user_id = app.globalData.user_id;
   this.setData({ 'user_id': user_id})
   this.cartList();
 },
@@ -144,8 +257,7 @@ onPullDownRefresh() {
 },
 onShow: function() {
 // 页面显示
-
-
+  this.cartList();
 },
 onHide: function() {
 // 页面隐藏

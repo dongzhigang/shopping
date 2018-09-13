@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 25,
 			"list": [
 				{
 					"id": -1,
@@ -110,12 +110,6 @@
 					"query": ""
 				},
 				{
-					"id": 12,
-					"name": "商品",
-					"pathName": "pages/goods/goods",
-					"query": "id=1181000"
-				},
-				{
 					"id": 13,
 					"name": "商品评论列表",
 					"pathName": "pages/comment/comment",
@@ -123,15 +117,15 @@
 					"scene": "1001"
 				},
 				{
-					"id": 14,
+					"id": 13,
 					"name": "购物车",
 					"pathName": "pages/cart/cart",
-					"query": "user_id=1",
+					"query": "",
 					"scene": "1001"
 				},
 				{
-					"id": 15,
-					"name": "下单",
+					"id": 14,
+					"name": "下单填写订单",
 					"pathName": "pages/checkout/checkout",
 					"query": "",
 					"scene": "1001"
@@ -143,10 +137,11 @@
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "我的",
+					"id": 16,
+					"name": "我的中心",
 					"pathName": "pages/ucenter/index/index",
-					"query": ""
+					"query": "",
+					"scene": "1001"
 				},
 				{
 					"id": -1,
@@ -191,16 +186,18 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 24,
 					"name": "我的地址",
 					"pathName": "pages/ucenter/address/address",
-					"query": ""
+					"query": "",
+					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 25,
 					"name": "我的地址添加",
 					"pathName": "pages/ucenter/addressAdd/addressAdd",
-					"query": ""
+					"query": "",
+					"scene": "1001"
 				},
 				{
 					"id": -1,

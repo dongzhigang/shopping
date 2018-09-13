@@ -17,7 +17,8 @@ App({
     
   },
   globalData:{
-    path: api.WxApiRoot
+    path: api.WxApiRoot,
+    user_id:1
   }
 
 })

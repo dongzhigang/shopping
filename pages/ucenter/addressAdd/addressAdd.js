@@ -1,22 +1,22 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
-
 var app = getApp();
 Page({
   data: {
     address: {
-      id:0,
-      provinceId: 0,
-      cityId: 0,
-      areaId: 0,
-      address: '',
-      name: '',
-      mobile: '',
-      isDefault: 0,
-      provinceName: '',
-      cityName: '',
-      areaName: ''
+      id:0,                                 //用户id
+      provinceName: '',                     //省份名称
+      cityName: '',                         //城市名称
+      areaName: '',                         //区/县名称
+      address: '',                          //详细
+      name: '',                             //姓名                             
+      mobile: '',                           //手机号码
+      phone:'',                             //座机号码
+      isDefault: 0,                         //判断是否默认，0、1
     },
+    region: ['省', '市', '区/县'],          //地区数据
+
+
     addressId: 0,
     openSelectRegion: false,
     selectRegionList: [
@@ -28,27 +28,56 @@ Page({
     regionList: [],
     selectRegionDone: false
   },
-  bindinputMobile(event) {
+  /**
+   * 事件函数
+   */
+  //获取手机数据
+  bindinputMobile:function(e) {
     let address = this.data.address;
-    address.mobile = event.detail.value;
+    address.mobile = e.detail.value;
     this.setData({
       address: address
     });
   },
-  bindinputName(event) {
+  //获取座机数据
+  bindinputPhone:function(e) {
     let address = this.data.address;
-    address.name = event.detail.value;
+    address.phone = e.detail.value;
     this.setData({
       address: address
     });
   },
-  bindinputAddress (event){
+  //获取姓名数据
+  bindinputName(e) {
     let address = this.data.address;
-    address.address = event.detail.value;
+    address.name = e.detail.value;
     this.setData({
       address: address
     });
   },
+  bindRegionChange: function (e){
+    let area = e.detail.value;
+    let provinceName = area[0];
+    let cityName = area[1];
+    let areaName = area[2];
+    let address = this.data.address;
+    address.provinceName = provinceName;
+    address.cityName = cityName;
+    address.areaName = areaName;
+    this.setData({
+      address: address
+    });
+    console.log(address)
+  },
+  //获取详细地址数据
+  bindinputAddress:function(e){
+    let address = this.data.address;
+    address.address = e.detail.value;
+    this.setData({
+      address: address
+    });
+  },
+  //获取是否默认数据
   bindIsDefault(){
     let address = this.data.address;
     address.isDefault = !address.isDefault;
@@ -56,6 +85,68 @@ Page({
       address: address
     });
   },
+  //保存地址
+  saveAddress:function() {
+    console.log(this.data.address)
+    let address = this.data.address;
+    if (address.name == '') {
+      util.showErrorToast('请输入姓名');
+      return false;
+    }
+    if (address.mobile == '') {
+      util.showErrorToast('请输入手机号码');
+      return false;
+    }
+    if (address.phone == '') {
+      util.showErrorToast('请输入座机号码');
+      return false;
+    }
+    if (address.address == '') {
+      util.showErrorToast('请输入详细地址');
+      return false;
+    }
+    return;
+    let that = this;
+    util.request(api.AddressSave, {
+      id: address.id,
+      name: address.name,
+      mobile: address.mobile,
+      provinceId: address.provinceId,
+      cityId: address.cityId,
+      areaId: address.areaId,
+      address: address.address,
+      isDefault: address.isDefault,
+      provinceName: address.provinceName,
+      cityName: address.cityName,
+      countyName: address.areaName
+    }, 'POST').then(function (res) {
+      if (res.errno === 0) {
+        //返回之前，先取出上一页对象，并设置addressId
+        var pages = getCurrentPages();
+        var prevPage = pages[pages.length - 2];
+        console.log(prevPage);
+        if (prevPage.route == "pages/checkout/checkout") {
+          prevPage.setData({
+            addressId: res.data
+          })
+
+          try {
+            wx.setStorageSync('addressId', res.data);
+          } catch (e) {
+
+          }
+          console.log("set address");
+        }
+        wx.navigateBack();
+      }
+    });
+
+  },
+  //取消
+  cancelAddress() {
+    wx.navigateBack();
+  },
+
   getAddressDetail() {
     let that = this;
     util.request(api.AddressDetail, { id: that.data.addressId }).then(function (res) {
@@ -120,19 +211,6 @@ Page({
     }
 
     this.setRegionDoneStatus();
-
-  },
-  onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
-    console.log(options)
-    if (options.id && options.id != 0) {
-      this.setData({
-        addressId: options.id
-      });
-      this.getAddressDetail();
-    }
-  },
-  onReady: function () {
 
   },
   selectRegionType(event) {
@@ -257,74 +335,22 @@ Page({
       }
     });
   },
-  cancelAddress(){
-    wx.navigateBack();
+
+  /**
+   * 生命周期
+   */
+  //页面加载中
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    console.log(options)
+    if (options.id && options.id != 0) {
+      this.setData({
+        addressId: options.id
+      });
+      this.getAddressDetail();
+    }
   },
-  saveAddress(){
-    console.log(this.data.address)
-    let address = this.data.address;
-
-    if (address.name == '') {
-      util.showErrorToast('请输入姓名');
-
-      return false;
-    }
-
-    if (address.mobile == '') {
-      util.showErrorToast('请输入手机号码');
-      return false;
-    }
-
-
-    if (address.areaId == 0) {
-      util.showErrorToast('请输入省市区');
-      return false;
-    }
-
-    if (address.address == '') {
-      util.showErrorToast('请输入详细地址');
-      return false;
-    }
-
-    if (!check.isValidPhone(address.mobile)) {
-      util.showErrorToast('手机号不正确');
-      return false;
-    }
-
-    let that = this;
-    util.request(api.AddressSave, { 
-      id: address.id,
-      name: address.name,
-      mobile: address.mobile,
-      provinceId: address.provinceId,
-      cityId: address.cityId,
-      areaId: address.areaId,
-      address: address.address,
-      isDefault: address.isDefault,
-      provinceName: address.provinceName,
-      cityName: address.cityName,
-      countyName: address.areaName
-    }, 'POST').then(function (res) {
-      if (res.errno === 0) {
-        //返回之前，先取出上一页对象，并设置addressId
-        var pages = getCurrentPages();
-        var prevPage = pages[pages.length - 2];
-        console.log(prevPage);
-        if (prevPage.route == "pages/checkout/checkout") {
-          prevPage.setData({
-            addressId: res.data
-          })
-
-          try {
-            wx.setStorageSync('addressId', res.data);
-          } catch (e) {
-
-          }
-          console.log("set address");
-        }
-        wx.navigateBack();
-      }
-    });
+  onReady: function () {
 
   },
   onShow: function () {
