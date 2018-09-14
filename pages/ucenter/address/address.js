@@ -1,13 +1,83 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var app = getApp();
-
 Page({
   data: {
-    addressList: [],
+    addressList: [],                          //地址列表
+    user_id:app.globalData.user_id,           //用户id
   },
+  /**
+   * 事件函数
+   */
+  getAddressList() {
+    let that = this;
+    let url = api.AddressList;
+    let data = {
+      'user_id': this.data.user_id
+    };
+    util.request(api.AddressList,data,'POST').then(function (res) {
+      if (res.code === 0) {
+        that.setData({
+          addressList: res.data
+        });
+      }
+    });
+  },
+  //添加
+  addressAddOrUpdate:function(e) {
+    //返回之前，先取出上一页对象，并设置addressId地址id
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];
+    if (prevPage) {
+      try {
+        wx.setStorageSync('addressId', e.currentTarget.dataset.addressId);
+      } catch (e) {
+
+      }
+      wx.navigateBack();
+    } else {
+      wx.navigateTo({
+        url: '/pages/ucenter/addressAdd/addressAdd?id=' + e.currentTarget.dataset.addressId
+      })
+    }
+  },
+  //删除
+  deleteAddress:function(e) {
+    let that = this;
+    let url = api.AddressDelete;
+    let addressId = e.target.dataset.addressId;
+    let data = {
+      id: addressId
+    };
+    wx.showModal({
+      title: '',
+      content: '确定要删除地址？',
+      success: function (res) {
+        if (res.confirm) {
+          util.request(url, data, 'POST').then(function (res) {
+            if (res.code === 0) {
+              //删除缓冲的地址id
+              wx.removeStorage({
+                key: 'addressId',
+                success: function (res) {
+                  //重新加载 
+                  that.onLoad();
+                },
+              })
+            }
+          });
+        }
+      }
+    })
+    return false;
+  },
+
+  /**
+   * 生命周期
+   */
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    this.getAddressList();
   },
   onReady: function () {
     // 页面渲染完成
@@ -15,64 +85,6 @@ Page({
   onShow: function () {
     // 页面显示
     this.getAddressList();
-  },
-  getAddressList (){
-    let that = this;
-    util.request(api.AddressList).then(function (res) {
-      if (res.errno === 0) {
-        that.setData({
-          addressList: res.data
-        });
-      }
-    });
-  },
-  addressAddOrUpdate (event) {
-    console.log(event)
-
-    //返回之前，先取出上一页对象，并设置addressId
-    var pages = getCurrentPages();
-    var prevPage = pages[pages.length - 2];
-
-    if (prevPage.route == "pages/checkout/checkout") {
-      try {
-        wx.setStorageSync('addressId', event.currentTarget.dataset.addressId);
-      } catch (e) {
-
-      }
-
-      wx.navigateBack();
-    } else {
-      wx.navigateTo({
-        url: '/pages/ucenter/addressAdd/addressAdd?id=' + event.currentTarget.dataset.addressId
-      })
-    }
-  },
-  deleteAddress(event){
-    console.log(event.target)
-    let that = this;
-    wx.showModal({
-      title: '',
-      content: '确定要删除地址？',
-      success: function (res) {
-        if (res.confirm) {
-          let addressId = event.target.dataset.addressId;
-          util.request(api.AddressDelete, {
-            id: addressId
-          }, 'POST').then(function(res) {
-            if (res.errno === 0) {
-              that.getAddressList();
-              wx.removeStorage({
-                key: 'addressId',
-                success: function(res) {},
-              })
-            }
-          });
-          console.log('用户点击确定')
-        }
-      }
-    })
-    return false;
-    
   },
   onHide: function () {
     // 页面隐藏

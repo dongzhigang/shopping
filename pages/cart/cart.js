@@ -39,6 +39,8 @@ cartList:function(){
 },
 //更新购物车
 updateCart:function(){
+  let _that = this;
+  let cartGoods = this.data.cartGoods;
   let arrayId = this.data.arrayId.join();
   let arrayNum = this.data.arrayNum.join();
   let url = api.CartUpdate;
@@ -46,10 +48,17 @@ updateCart:function(){
   util.request(url,data).then(function(res){
     if(res.code == 0){
       util.showToast(res.msg);
+      setTimeout(function () {
+        _that.onShow();
+        _that.setData({
+          isEditCart: false,
+          selectNumber:0
+        })
+      }, 1000)
     }else{
       util.showToast(res.msg)
     }
-  })
+  }.bind(this))
   //清空id，num
   this.setData({
     arrayId:[],
@@ -68,6 +77,10 @@ deleteCart:function(){
       util.showToast(res.msg)
       setTimeout(function(){
         _that.onShow()
+        _that.setData({
+          isEditCart: false,
+          selectNumber:0
+        })
       },1000)
     } else {
       util.showToast(res.msg)
@@ -82,20 +95,16 @@ deleteCart:function(){
 //编辑
 editCart:function(e){
   let id = e.currentTarget.id;
-  let cartGoods = this.data.cartGoods;
-  if (this.data.isEditCart){
-    cartGoods.map(function (v, i) {
-      v.checked = false;
-    })
-    this.setData({
-      cartGoods: cartGoods,
-      isEditCart: !this.data.isEditCart
-    })
-    
+  if (this.data.isEditCart){    
     switch(id){
       case "edit":
-        //更新购物车
-        this.updateCart();
+        if (this.isEditCart()===true){
+          //更新购物车
+          this.updateCart();
+        }else{
+          util.showToast('请选择商品');
+          return;
+        }
       break;
       case "del":
         //删除购物车
@@ -109,7 +118,21 @@ editCart:function(e){
     return;
   }
   //调用全选函数，全部初始化
-  this.checkedAll();
+  this.setData({
+    isEditCart: !this.data.isEditCart
+  })
+},
+//取消
+cancelCart:function(){
+  let cartGoods = this.data.cartGoods;
+  cartGoods.map(function (v, i) {
+    v.checked = false;
+  })
+  this.setData({ 
+    isEditCart:false,
+    checkedAll:false,
+    cartGoods: cartGoods
+  })
 },
 //选择
 checkedItem:function(e){
@@ -136,9 +159,13 @@ checkedItem:function(e){
       arrayNum.splice(i, 0, v.num);
     } 
   })
+  if (this.data.isEditCart){
+    this.setData({
+      isEditCart: this.isEditCart()
+    })
+  }
   this.setData({
     cartGoods: cartGoods,
-    isEditCart: this.isEditCart(),
     checkedAll: this.hasCheckedAll(),
     selectNumber: selectNumber,
     totalPrice: totalPrice,
@@ -161,6 +188,7 @@ checkedAll:function(){
     totalPrice=0;
     arrayId = [];
     arrayNum = [];
+    
 
   }else{
     cartGoods.map(function (v, i) {
@@ -171,6 +199,11 @@ checkedAll:function(){
       arrayNum.push(v.num);
     })
   }
+  if (this.data.isEditCart) {
+    this.setData({
+      isEditCart: this.isEditCart()
+    })
+  }
   this.setData({
     cartGoods: cartGoods,
     checkedAll: this.hasCheckedAll(),
@@ -178,7 +211,6 @@ checkedAll:function(){
     totalPrice: totalPrice,
     arrayId: arrayId,
     arrayNum: arrayNum,
-    isEditCart: this.isEditCart()
   })
 },
 //判断是否有选择商品
@@ -239,7 +271,12 @@ addNumber:function(e){
   })
   this.setData({ cartGoods: cartGoods, totalPrice: totalPrice, arrayNum: arrayNum })
 },
+//下单
+checkoutOrder: function() {
+//获取已选择的商品
+let that = this;
 
+},
 /**
  * 生命周期
  */

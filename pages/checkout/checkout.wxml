@@ -1,13 +1,15 @@
 <view class="container">
     <view class="address-box">
-        <view class="address-item" bindtap="selectAddress" wx:if="{{checkedAddress.id > 0}}">
-            <view class="l">
-                <text class="name">{{checkedAddress.name}}</text>
-                <text class="default" wx:if="{{checkedAddress.isDefault}}">默认</text>
-            </view>
-            <view class="m">
-                <text class="mobile">{{checkedAddress.mobile}}</text>
-                <text class="address">{{checkedAddress.address}}</text>
+        <view class="address-item" bindtap="selectAddress" wx:if="{{checkedAddress}}">
+            <view class='lt'>
+              <view class="l">
+                  <text class="name">收货人：{{checkedAddress.name}}</text>
+                  <text class="mobile">{{checkedAddress.mobile}}</text>
+                  <text class="default" wx:if="{{checkedAddress.Default}}">默认</text>
+              </view>
+              <view class="m">
+                {{checkedAddress.provinceName}} {{checkedAddress.cityName}} {{checkedAddress.areaName}} {{checkedAddress.address}} 
+              </view>
             </view>
             <view class="r">
                 <image src="/static/images/address_right.png"></image>
@@ -63,17 +65,17 @@
     </view>
 
     <view class="goods-items">
-        <view class="item" wx:for="{{checkedGoodsList}}" wx:key="id">
+        <view class="item" >
             <view class="img">
-                <image src="{{item.picUrl}}"></image>
+                <image src="{{path}}{{checkedGoodsList.img}}"></image>
             </view>
             <view class="info">
                 <view class="t">
-                    <text class="name">{{item.goodsName}}</text>
-                    <text class="number">x{{item.number}}</text>
+                    <text class="name">{{checkedGoodsList.name}}</text>
+                    <text class="number">x{{goodsNum}}</text>
                 </view>
-                <view class="m">{{item.specifications}}</view>
-                <view class="b">￥{{item.price}}</view>
+                <view class="m">{{checkedGoodsList.value}}</view>
+                <view class="b">￥{{checkedGoodsList.at_price}}</view>
             </view>
         </view>
     </view>

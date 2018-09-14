@@ -490,6 +490,9 @@ page {
   letter-spacing: 3rpx;
   background-image: linear-gradient(to right, #9a9ba1 0%, #9a9ba1 100%);
 }
+.action_btn_area .cancel{
+  background: #666;
+}
 
 .action_btn_area .sure {
   text-align: center;

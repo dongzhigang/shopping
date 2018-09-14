@@ -13,7 +13,7 @@ Page({
     productInfo:[],                  //商品信息
     Property:[],                     //商品属性
     answer: [],                      //常见问题
-    num:0,                           //商品数量
+    num:1,                           //商品数量
     count:0,                         //评论数量
     cartNum:0,                       //购物车数量
     PropertyVal:'',                  //属性值
@@ -77,7 +77,7 @@ Page({
   cutNumber: function () {
     let num = this.data.num;
     num-=1;
-    if(num < 0){
+    if(num < 1){
       return;
     }
     this.setData({num:num})
@@ -146,7 +146,22 @@ Page({
       }
     }.bind(this))
   },
-
+  //立即购买
+  addFast: function () {
+    //判断是否选择规格
+    if (!this.data.PropertyId) {
+      util.showToast('请选择规格');
+      return;
+    }
+    //判断是否选择数量
+    if (!this.data.num) {
+      util.showToast('请选择数量');
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/checkout/checkout?id=' + this.data.product_id + "&num=" + this.data.num
+    })
+  },
 
   // 下拉刷新
   onPullDownRefresh() {
@@ -190,9 +205,6 @@ Page({
   },
   //添加或是取消收藏
   addCollectOrNot: function() {
-  },
-  //立即购买（先自动加入购物车）
-  addFast: function() {  
   },
   /**
    * app生命周期

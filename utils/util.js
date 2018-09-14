@@ -65,7 +65,7 @@ function request(url, data = {}, method = "GET") {
 function showToast(msg){
   wx.showToast({
     title: msg,
-    icon: 'success',
+    icon: 'none',
     duration: 1000
   })
 }

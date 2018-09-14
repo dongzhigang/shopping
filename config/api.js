@@ -35,9 +35,9 @@ module.exports = {
   CartFastAdd: WxApiRoot + 'cart/fastadd', // 立即购买商品
   CartUpdate: WxApiRoot + 'shoppingAdmin/index/Shopcar/updateCar', // 更新购物车的商品
   CartDelete: WxApiRoot + 'shoppingAdmin/index/Shopcar/deleteCar', // 删除购物车的商品
-  CartChecked: WxApiRoot + 'cart/checked', // 选择或取消选择商品
+  CartChecked: WxApiRoot + '', // 选择或取消选择商品
   CartGoodsCount: WxApiRoot + 'shoppingAdmin/index/Shopcar/cartCount', // 获取购物车商品件数
-  CartCheckout: WxApiRoot + 'cart/checkout', // 下单前信息确认
+  CartCheckout: WxApiRoot + 'shoppingAdmin/index/Shopcar/cartCheckout', // 下单前信息确认
 
   CollectList: WxApiRoot + 'collect/list', //收藏列表
   CollectAddOrDelete: WxApiRoot + 'collect/addordelete', //添加或取消收藏
@@ -55,10 +55,10 @@ module.exports = {
   SearchHelper: WxApiRoot + 'search/helper', //搜索帮助
   SearchClearHistory: WxApiRoot + 'search/clearhistory', //搜索历史清楚
 
-  AddressList: WxApiRoot + 'address/list', //收货地址列表
-  AddressDetail: WxApiRoot + 'address/detail', //收货地址详情
-  AddressSave: WxApiRoot + 'address/save', //保存收货地址
-  AddressDelete: WxApiRoot + 'address/delete', //保存收货地址
+  AddressList: WxApiRoot + 'shoppingAdmin/index/Addresss/addressList', //收货地址列表
+  AddressDetail: WxApiRoot + 'shoppingAdmin/index/Addresss/detailAddress', //收货地址详情
+  AddressSave: WxApiRoot + 'shoppingAdmin/index/Addresss/addAddress', //保存收货地址
+  AddressDelete: WxApiRoot + 'shoppingAdmin/index/Addresss/delAddress', //删除收货地址
 
   ExpressQuery: WxApiRoot + 'express/query', //物流查询
 

@@ -109,7 +109,7 @@
   </view>
 
   <!-- 大家都在看 -->
-  <view class="related-goods" wx:if="{{relatedGoods.length > 0}}">
+  <!-- <view class="related-goods" wx:if="{{relatedGoods.length > 0}}">
     <view class="h">
       <view class="line"></view>
       <text class="title">大家都在看</text>
@@ -123,7 +123,7 @@
         </navigator>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>
 <!-- 规格选择界面 -->
 <view class="attr-pop-box" hidden='{{!hasSpec}}'>
@@ -191,6 +191,6 @@
     </navigator>
   </view>
   <view class="r" bindtap="addToCart" >加入购物车</view>
-  <view class="c" bindtap="addFast" >{{isGroupon?'参加团购':'立即购买'}}</view>
+  <view class="c" bindtap="addFast" >立即购买</view>
   <view class="n" hidden='{{!isFooter}}' >商品已售空</view>
 </view>

@@ -58,6 +58,7 @@
             {{!isEditCart ? '编辑' : '完成'}}
           </view>
           <view class="delete" bindtap="editCart" wx:if="{{isEditCart}}" id="del">删除({{selectNumber}})</view>
+          <view class="delete cancel" bindtap="cancelCart" wx:if="{{isEditCart}}" >取消</view>
           <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
           <!-- </view>  -->
         </view>
