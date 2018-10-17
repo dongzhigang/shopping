@@ -59,8 +59,6 @@
 
 .goods-info {
   width: 750rpx;
-  height: 306rpx;
-  overflow: hidden;
   background: #fff;
 }
 .goods-info-name{

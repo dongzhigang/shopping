@@ -2,15 +2,17 @@
     <view class="address-list" wx:if="{{ addressList.length > 0 }}">
         <view class="item" wx:for="{{addressList}}" wx:key="id" bindtap="addressAddOrUpdate" 
             data-address-id="{{item.address_id}}">
-            <view class="l">
-                <view class="name">{{item.name}}</view>
-                <view class="default" wx:if="{{item.isDefault}}">默认</view>
-            </view>
-            <view class="c">
-                <view class="mobile">{{item.mobile}}</view>
-                <view class="address">
-                  {{item.provinceName + item.cityName + item.areaName + item.address}}
-                </view>
+            <view class='lt'>
+              <view class="l">
+                  <view class="name">{{item.name}}</view>
+                  <view class="mobile">{{item.mobile}}</view>
+                  <view class="default" wx:if="{{index==0}}">默认</view>
+              </view>
+              <view class="c">
+                  <view class="address">
+                    {{item.provinceName + item.cityName + item.areaName + item.address}}
+                  </view>
+              </view>
             </view>
             <view class="r">
                 <image catchtap="deleteAddress" data-address-id="{{item.address_id}}" class="del" src="/static/images/del-address.png"></image>

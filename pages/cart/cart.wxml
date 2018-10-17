@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="no-login" wx:if="{{hasLogin}}">
+  <view class="no-login" wx:if="{{!hasLogin}}">
     <view class="c">
       <image src="/static/images/noCart.png" />
       <text>还没有登录</text>
@@ -23,6 +23,10 @@
         <view class="group-item">
           <view class="goods">
             <block wx:for="{{cartGoods}}" wx:key="index">
+              <view class='title'>
+                <image src='{{path}}{{item.product_msg.brand.img}}'></image>
+                <text>{{item.product_msg.brand.brand_name}}</text>
+              </view>
               <view class="item {{item.checked ?'edit':''}}" >
                 <view class="checkbox  {{item.checked ? 'checked' : ''}}" bindtap="checkedItem" 
                   data-index='{{index}}' ></view>
@@ -33,7 +37,7 @@
                       <text class="name">{{item.product_msg.name}}</text>
                       <text class="num">x{{item.num}}</text>
                     </view>
-                    <view class="attr">{{item.checked ?'已选择':''}}{{item.product_msg.value||''}}</view>
+                    <view class="attr">{{item.checked ?'已选择':''}}{{item.property_val||''}}</view>
                     <view class="b">
                       <text class="price">￥{{price || item.product_msg.at_price}}</text>
                       <view class="selnum">

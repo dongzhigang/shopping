@@ -33,11 +33,10 @@ Page({
   //商品列表
   getGoodsList: function () {
     let that = this;
-    let url = api.GoodsList;
+    let url = api.GoodsHot;
     let data = {
       'page': this.data.page,
       'rows': this.data.rows,
-      'hot_sale': 1
     };
     //排序
     if (this.data.order) {

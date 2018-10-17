@@ -15,9 +15,9 @@
               <text class="desc">{{currenDocs}}</text>
           </view>
           <view class="b" wx:if="{{productList.length}}">
-              <navigator class="item"  url="/pages/goods/goods?id={{item.product_id}}" 
+              <navigator class="item"  url="/pages/goods/goods?product_id={{item.product_id}}" 
                   wx:for="{{productList}}" wx:key="index">
-                  <image class="img" src="{{path+item.img}}" background-size="cover"></image>
+                  <image class="img" src="{{item.img}}" background-size="cover"></image>
                   <text class="name">{{item.name}}</text>
                   <text class="price">￥{{item.at_price}}</text>
               </navigator>

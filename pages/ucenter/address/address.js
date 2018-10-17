@@ -4,7 +4,7 @@ var app = getApp();
 Page({
   data: {
     addressList: [],                          //地址列表
-    user_id:app.globalData.user_id,           //用户id
+    user_id:'',                               //用户id
   },
   /**
    * 事件函数
@@ -26,9 +26,10 @@ Page({
   //添加
   addressAddOrUpdate:function(e) {
     //返回之前，先取出上一页对象，并设置addressId地址id
+    console.log(e)
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];
-    if (prevPage) {
+    if (prevPage.route == "pages/checkout/checkout") {
       try {
         wx.setStorageSync('addressId', e.currentTarget.dataset.addressId);
       } catch (e) {
@@ -77,6 +78,7 @@ Page({
    */
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    this.setData({ user_id: app.globalData.user_id})
     this.getAddressList();
   },
   onReady: function () {

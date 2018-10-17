@@ -33,6 +33,7 @@ Page({
             productList: res.data.productList,
             newGoods: res.data.newProduct,
           })
+          console.log(_that.data.brands)
           wx.hideLoading();
         }else{
           wx.hideLoading();
@@ -50,6 +51,7 @@ Page({
   // 页面渲染完成
   },
   onShow: function() {
+    this.banner();  //首页轮播
   // 页面显示
   },
   onHide: function() {

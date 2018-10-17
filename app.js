@@ -14,11 +14,16 @@ App({
     });
   },
   onShow: function (options) {
-    
+    user.checkLogin().then(res => {
+      this.globalData.hasLogin = true;
+    }).catch(() => {
+      this.globalData.hasLogin = false;
+    });
   },
   globalData:{
     path: api.WxApiRoot,
-    user_id:1
+    user_id:'',
+    hasLogin:false
   }
 
 })

@@ -7,6 +7,7 @@ var user = require('../../utils/user.js');
 Page({
   data: {
     path:app.globalData.path,        //域名
+    user_id:'',
     hasSpec: false,                  //规格选择界面显示隐藏，true显示，false隐藏
     isFooter:false,                  //判断是否售空
     goodsimgs:[],                    //商品主图
@@ -18,8 +19,9 @@ Page({
     cartNum:0,                       //购物车数量
     PropertyVal:'',                  //属性值
     hasIndex:-1,                     //判断是否选择属性
-    PropertyId:'',                   //属性id
     product_id:'',                   //商品id
+    CollectIcon:'',                  //收藏图标
+    hasCollect:false,                //判断是否收藏
   },
   /**
    * 事件
@@ -29,7 +31,7 @@ Page({
     let _that = this;
     let url = api.GoodsDetail;
     let data = {
-      'product_id':this.data.id
+      'product_id': this.data.product_id
     }
     util.showLoading(function () {
       util.request(url, data, 'POST').then(function (res) {
@@ -43,6 +45,7 @@ Page({
             answer: res.data.answer,
             commentlist: res.data.commentlist
           })
+          WxParse.wxParse('goodsDetail', 'html', res.data.contents.contents, _that);
           _that.getCount();
           _that.cartCount();
           wx.hideLoading();
@@ -55,7 +58,7 @@ Page({
     let _that = this;
     let url = api.CommentCount;
     let data = {
-      'product_id': this.data.id
+      'product_id': this.data.product_id
     }
     util.request(url,data).then(function(res){
       console.log(res)
@@ -92,45 +95,90 @@ Page({
   //添加到购物车
   addToCart: function () {
     //判断是否选择规格
-    if (!this.data.PropertyId){
-      util.showToast('请选择规格');
+    if (!this.hasProperty()){
+      util.showToast('请选择商品规格/属性');
+      this.setData({
+        hasSpec: true
+      })
       return;
     }
-    //判断是否选择数量
-    if (!this.data.num){
-      util.showToast('请选择数量');
+    //判断是否登录
+    if (!app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
       return;
     }
     let url = api.CartAdd;
     let data = {
       'product_id': this.data.product_id,
-      'user_id': 1,
+      'user_id': this.data.user_id,
+      'property_val': this.data.PropertyVal,
       'num': this.data.num,
-      'property_id': this.data.PropertyId
     }
-    console.log(data)
-    util.request(url, data).then(function (res) {
+    util.request(url, data,'POST').then(function (res) {
       console.log(res)
       if(res.code==0){
         util.showToast(res.msg);
         this.setData({
           hasSpec: !this.data.hasSpec
         })
+        this.onShow();
       }
     }.bind(this))
   },
   // 规格选择
   clickSkuValue: function (e) {
-    let PropertyId = e.currentTarget.dataset.id;
-    let PropertyVal = e.currentTarget.dataset.value;
-    let hasIndex = e.currentTarget.dataset.index;
-    let product_id = e.currentTarget.dataset.productid
+    let index = e.currentTarget.dataset.index;
+    let name_id = e.currentTarget.dataset.nameId;
+    let idx = e.currentTarget.dataset.idx;
+    let property = this.data.property;
+    console.log(property);
+    property.map(function(v,i){
+      if(i==index){
+        v.value.map(function(val,k){
+          if (k == idx){
+            if (val.checked){
+              val.checked = false;
+              return;
+            }
+            val.checked = true;
+          }else{
+            val.checked = false;
+          }
+        })
+      }
+    })
+    let PropertyVal = this.propertyVal().join();
     this.setData({
-      hasProperty:true,
-      PropertyId: PropertyId,
+      property: property,
       PropertyVal: PropertyVal,
-      hasIndex: hasIndex,
-      product_id: product_id
+      name_id: name_id
+    })
+  },
+  //获取规格的值
+  propertyVal:function(){
+    let property = this.data.property;
+    let array = [];
+    property.map(function(v,i){
+      v.value.map(function(val,k){
+        if(val.checked){
+          array.push(val.value)
+        }
+      })
+    })
+    return array;
+  },
+  //判断规格是否有选择
+  hasProperty:function(){
+    console.log(this.data.property)
+    return this.data.property.every(function (v, i) {
+      return v.value.some(function (val, k) {
+        if (val.checked) {
+          return true;
+        }
+        return false;
+      })
     })
   },
   //购物车商品件数
@@ -140,7 +188,6 @@ Page({
       'user_id':this.data.user_id
     }
     util.request(url, data, 'POST').then(function(res){
-      console.log(res)
       if(res.code==0){
         this.setData({ cartNum:res.data})
       }
@@ -149,18 +196,63 @@ Page({
   //立即购买
   addFast: function () {
     //判断是否选择规格
-    if (!this.data.PropertyId) {
-      util.showToast('请选择规格');
+    if (!this.hasProperty()) {
+      util.showToast('请选择商品规格/属性');
+      this.setData({
+        hasSpec: true
+      })
       return;
     }
-    //判断是否选择数量
-    if (!this.data.num) {
-      util.showToast('请选择数量');
+    //判断是否登录
+    if (!app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
       return;
     }
     wx.navigateTo({
-      url: '/pages/checkout/checkout?id=' + this.data.product_id + "&num=" + this.data.num
+      url: '/pages/checkout/checkout?id='+this.data.product_id+"&num="+this.data.num+"&PropertyVal="+this.data.PropertyVal
     })
+  },
+  //判断商品是否收藏
+  hasCollect:function(){
+    let url = api.HasCollect;
+    let data = { 'product_id': this.data.product_id, user_id: this.data.user_id}
+    util.request(url,data,'POST').then(function(res){
+      if(res.code===0){
+        this.setData({ hasCollect: true, collect_id: res.data.collect_id })
+      }
+    }.bind(this))
+  },
+  //添加或是取消收藏
+  addCollectOrNot: function () {
+    //判断是否登录
+    if (!app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+      return;
+    }
+    let url,data;
+    if (this.data.hasCollect) {//取消收藏操作
+      url = api.DeleteCollect;
+      data = { 'collect_id': this.data.collect_id, "product_id": this.data.product_id }
+      util.request(url, data, 'POST').then(function (res) {
+        if (res.code === 0) {
+          this.setData({ hasCollect: false })
+        }
+        console.log(res)
+      }.bind(this))
+    } else {//收藏操作
+      url = api.AddCollect;
+      data = { 'user_id': this.data.user_id, "product_id": this.data.product_id}
+      util.request(url,data,'POST').then(function(res){
+        if(res.code === 0){
+          this.setData({ hasCollect: true, collect_id: res.data.collect_id })
+        }
+        console.log(res)
+      }.bind(this))
+    }
   },
 
   // 下拉刷新
@@ -203,23 +295,23 @@ Page({
   // 获取选中的产品（根据规格）
   getCheckedProductItem: function(key) {
   },
-  //添加或是取消收藏
-  addCollectOrNot: function() {
-  },
+
   /**
    * app生命周期
    */
   onLoad: function (options) {
-    let id = options.id;
-    let user_id = app.globalData.user_id;
+    let product_id = options.product_id;
     this.setData({
-      id:id,
-      user_id: user_id
+      product_id: product_id,
     })
     this.getGoodsInfo();
   },
   onShow: function () {
-
+    this.setData({
+      user_id: app.globalData.user_id
+    })
+    this.cartCount();
+    this.hasCollect();
   },
   onHide: function() {
     // 页面隐藏

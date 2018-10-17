@@ -58,10 +58,10 @@ Page({
       }
     });
   },
-  //查询商品
+  //搜索结果
   getGoodsList: function () {
     let that = this;
-    let url = api.GoodsList;
+    let url = api.SearchResult;
     let data = {
       keyword: that.data.keyword,
       page: that.data.page,

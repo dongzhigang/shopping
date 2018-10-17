@@ -182,13 +182,26 @@ page{
     height: auto;
     overflow: hidden;
     background: #fff;
-    padding-left: 31.25rpx;
     margin-bottom: 120rpx;
 }
-
+.goods-items .title{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  border-bottom: solid 1rpx #eee;
+  padding: 20rpx;
+}
+.goods-items .title image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.goods-items .title text{
+ margin-left: 10rpx;
+}
 .goods-items .item{
     height: 192rpx;
-    padding-right: 31.25rpx;
+    padding: 0 20rpx;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(0,0,0,0.15);

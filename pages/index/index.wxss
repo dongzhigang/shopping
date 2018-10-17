@@ -123,7 +123,7 @@
 
 .a-brand .item-1 .img {
   width: 375rpx;
-  height: 253rpx;
+  height: 252rpx;
 }
 
 .a-groupon {

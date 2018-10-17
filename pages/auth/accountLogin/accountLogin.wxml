@@ -3,12 +3,12 @@
     <view class="form-box">
 
     	<view class="form-item">
-    		<input class="username" value="" bindinput="bindUsernameInput" placeholder="账号"/>
+    		<input class="username" value="{{username}}" bindinput="bindUsernameInput" placeholder="账号"/>
     		<image  id="clear-username" class="clear" src="/static/images/clear_input.png" catchtap="clearInput"></image>
     	</view>
 
     	<view class="form-item">
-    		<input class="password" value="" password bindinput="bindPasswordInput" placeholder="密码"/>
+    		<input class="password" value="{{password}}" password bindinput="bindPasswordInput" placeholder="密码"/>
     		<image class="clear" id="clear-password" src="/static/images/clear_input.png" catchtap="clearInput"></image>
     	</view>
 

@@ -3,14 +3,14 @@
   <!-- 轮播 -->
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="index">
-      <image src="{{path}}{{item.img}}" background-size="cover"></image>
+      <image src="{{item.img}}" background-size="cover"></image>
     </swiper-item>
   </swiper>
   <!-- 分类 -->
   <view class="m-menu" wx:if="{{channel.length}}">
     <navigator class="item" url="/pages/category/category?id={{item.Cate_id}}&title={{item.Cate_name}}" 
       wx:for="{{channel}}" wx:key="index" >
-      <image src="{{path}}{{item.icon}}" background-size="cover"></image>
+      <image src="{{item.icon}}" background-size="cover"></image>
       <text>{{item.Cate_name}}</text>
     </navigator>
   </view>
@@ -57,9 +57,9 @@
       <view class="item item-1" wx:for="{{brands}}" wx:key="index">
         <navigator url="/pages/brandDetail/brandDetail?id={{item.id}}">
           <view class="wrap">
-          <image class="img" src="{{path}}{{item.img}}" background-size="cover"></image>
+          <image class="img" src="" background-size="cover"></image>
           <view class="mt">
-            <text class="brand">{{item.brand_name}}</text>
+            <text class="brand">{{item.brand_name}}1</text>
             <text class="price">{{item.bot_price}}</text>
             <text class="unit">元起</text>
           </view>
@@ -79,8 +79,8 @@
     </view>
     <view class="b">
       <view class="item" wx:for="{{newGoods}}" wx:key="index">
-        <navigator url="../goods/goods?id={{item.product_id}}">
-          <image class="img" src="{{path}}{{item.img}}" background-size="cover"></image>
+        <navigator url="../goods/goods?product_id={{item.product_id}}">
+          <image class="img" src="{{item.img}}" background-size="cover"></image>
           <text class="name">{{item.name}}</text>
           <text class="price">￥{{item.at_price}}</text>
         </navigator>
@@ -98,8 +98,8 @@
     </view>
     <view class="b">
       <view class="item" wx:for="{{hotGoods}}" wx:key="index">
-      <navigator url="/pages/goods/goods?id={{item.product_id}}">
-        <image class="img" src="{{path}}{{item.img}}" background-size="cover"></image>
+      <navigator url="/pages/goods/goods?product_id={{item.product_id}}">
+        <image class="img" src="{{item.img}}" background-size="cover"></image>
         <view class="right">
         <view class="text">
           <text class="name">{{item.name}}</text>
@@ -138,6 +138,7 @@
   <!-- 分类列表 -->
   <view class="good-grid" wx:if="{{productList.length}}">
     <block wx:for="{{productList}}" wx:key="index">
+    <view wx:if="{{item.product_msg.length}}">
       <view class="h">
         <view>
         <text>{{item.Cate_name}}</text>
@@ -146,8 +147,8 @@
       <view class="b">
         <block wx:for="{{item.product_msg}}" wx:for-item="col" wx:key="i">
         <view class="item {{index % 2 == 0 ? '' : 'item-b'}}">
-          <navigator url="../goods/goods?id={{col.product_id}}" class="a">
-            <image class="img" src="{{path+col.img}}" background-size="cover"></image>
+          <navigator url="../goods/goods?product_id={{col.product_id}}" class="a">
+            <image class="img" src="{{col.img}}" background-size="cover"></image>
             <text class="name">{{col.name}}</text>
             <text class="price">￥{{col.at_price}}</text>
           </navigator>
@@ -160,6 +161,7 @@
         </navigator>
         </view>
       </view>
+    </view>
     </block>
   </view>
 </view>

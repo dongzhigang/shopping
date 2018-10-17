@@ -19,7 +19,6 @@ Page({
       util.showErrorToast('只能上传五张图片')
       return false;
     }
-
     var that = this;
     wx.chooseImage({
       count: 1,
@@ -41,6 +40,7 @@ Page({
       name: 'file',
       success: function (res) {
         var _res = JSON.parse(res.data);
+        console.log(res)
         if (_res.errno === 0) {
           var url = _res.data.url
           that.data.picUrls.push(url)

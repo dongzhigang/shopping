@@ -4,7 +4,7 @@ var app = getApp();
 Page({
   data: {
     address: {
-      user_id: app.globalData.user_id,      //用户id
+      user_id: '',      //用户id
       provinceName: '',                     //省份名称
       cityName: '',                         //城市名称
       areaName: '',                         //区/县名称
@@ -171,9 +171,11 @@ Page({
       this.setData({
         addressId: options.id,
       });
-      console.log(options.id)
       this.getAddressDetail();
     }
+    let address = this.data.address;
+    address.user_id = app.globalData.user_id
+    this.setData({ address: address})
   },
   onReady: function () {
 

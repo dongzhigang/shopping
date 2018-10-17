@@ -3,20 +3,20 @@
   <view class="post-comment">
     <view class="goods">
       <view class="img">
-        <image src="/static/images/8.jpg"></image>
+        <image src="{{goodsDetail.img}}"></image>
       </view>
       <view class="info">
         <view class="t">
-          <text class="name">苹果 x5</text>
+          <text class="name">{{goodsDetail.name}}</text>
         </view>
-        <view class="attr">哈哈哈哈哈哈哈哈</view>
+        <view class="attr">{{goodsDetail.docs}}</view>
       </view>
     </view>
     <view class="rater">
-      <text class="rater-title">评分</text>
-      <block>
-        <image src="/static/images/icon_collect_checked.png" bindtap="selectRater" ></image>
-        <image src="/static/images/icon_collect.png" bindtap="selectRater"></image>
+      <text class="rater-title">评分</text>      
+      <block wx:for="{{stars}}" wx:key="*this" wx:for-item="item">
+        <image src="/static/images/icon_collect_checked.png" bindtap="selectRater" data-grade="{{item}}" wx:if="{{item < grade}}"></image>
+        <image src="/static/images/icon_collect.png" bindtap="selectRater" data-grade="{{item}}" wx:else></image>
       </block>
       <text class="rater-desc">十分满意</text>
     </view>
@@ -28,18 +28,15 @@
     <view class="weui-uploader">
       <view class="weui-uploader__hd">
         <view class="weui-uploader__title">图片上传</view>
-        <view class="weui-uploader__info">0/0</view>
+        <view class="weui-uploader__info">{{picUrls.length}}/{{files.length}}</view>
       </view>
       <view class="weui-uploader__bd">
         <view class="weui-uploader__files" id="uploaderFiles">
-          <block>
-            <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-              <image class="weui-uploader__img" src="/static/images/8.jpg" mode="aspectFill" />
-            </view>
-            <!-- <view class="weui-uploader__file weui-uploader__file_status" bindtap="previewImage" id="{{item}}">
+         <block wx:for="{{files}}" wx:key="index">
+            <view class="weui-uploader__file weui-uploader__file_status" bindtouchend='endImage' 
+              bindtouchstart="startImage" data-index="{{index}}">
               <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-              <view class="weui-uploader__file-content">50%</view>
-            </view> -->
+            </view>
           </block>
           <view class="weui-uploader__input-box">
             <view class="weui-uploader__input" bindtap="chooseImage"></view>
@@ -50,7 +47,7 @@
 
     <view class="btns">
       <view class="close" bindtap="onClose">取消</view>
-      <view class="post" bindtap="onPost">发表</view>
+      <view class="post" bindtap="submitComment">发表</view>
     </view>
   </view>
 </view>

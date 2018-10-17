@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 37,
 			"list": [
 				{
 					"id": -1,
@@ -127,7 +127,7 @@
 					"id": 14,
 					"name": "下单填写订单",
 					"pathName": "pages/checkout/checkout",
-					"query": "id=1&num=3",
+					"query": "id=1&num=3&PropertyVal=标准",
 					"scene": "1001"
 				},
 				{
@@ -144,16 +144,18 @@
 					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "我的订单列表",
 					"pathName": "pages/ucenter/order/order",
-					"query": ""
+					"query": "user_id=3e5f208baaa6b3a370aaade99c1cb88b",
+					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 18,
 					"name": "我的订单详情",
 					"pathName": "pages/ucenter/orderDetail/orderDetail",
-					"query": "id=1"
+					"query": "id=af9a50ca72ef29edc8aa0f85608b792e",
+					"scene": "1001"
 				},
 				{
 					"id": 22,
@@ -174,10 +176,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 22,
 					"name": "我的收藏",
 					"pathName": "pages/ucenter/collect/collect",
-					"query": ""
+					"query": "user_id=1"
 				},
 				{
 					"id": -1,
@@ -200,10 +202,11 @@
 					"scene": "1001"
 				},
 				{
-					"id": -1,
+					"id": 26,
 					"name": "登录",
 					"pathName": "pages/auth/login/login",
-					"query": ""
+					"query": "",
+					"scene": "1001"
 				},
 				{
 					"id": -1,
@@ -242,10 +245,10 @@
 					"query": ""
 				},
 				{
-					"id": 34,
+					"id": 33,
 					"name": "商品详情",
 					"pathName": "pages/goods/goods",
-					"query": "id=1",
+					"query": "product_id=2",
 					"scene": "1001"
 				},
 				{
@@ -267,6 +270,13 @@
 					"name": "我的团购",
 					"pathName": "pages/groupon/myGroupon/myGroupon",
 					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": 37,
+					"name": "商品评论添加",
+					"pathName": "pages/commentPost/commentPost",
+					"query": "product_id=5fe8fb25142297125fd6ef2a89437a52&user_id=3e5f208baaa6b3a370aaade99c1cb88b&order_id=c4482efcad36634ab467dd7b300f7322",
 					"scene": "1001"
 				}
 			]

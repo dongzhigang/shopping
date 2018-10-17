@@ -1,12 +1,12 @@
 <view class="container">
   <view class="profile-info" bindtap="goLogin">
-    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    <image class="avatar" src="{{userInfo.imgUrl}}"></image>
     <view class="info">
       <text class="name">{{userInfo.nickName}}</text>
     </view>
   </view>
 
-    <view class='separate'></view>
+  <!-- <view class='separate'></view> -->
     
   <view class='user_area'>
     <view class='user_row' bindtap='goOrder'>
@@ -14,19 +14,19 @@
       <image class='user_row_right' src='/static/images/goright.png'></image>
     </view>
     <view class='user_column'>
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='1' data-route='/pages/ucenter/order/order'>
+      <view class='user_column_item' bindtap='goOrderIndex' data-index='1' data-route='/pages/ucenter/order/order?index=1'>
         <image class='user_column_item_image' src='/static/images/pendpay.png'></image>
         <view class='user_column_item_text'>待付款</view>
       </view>
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='2' data-route='/pages/ucenter/order/order'>
+      <view class='user_column_item' bindtap='goOrderIndex' data-index='2' data-route='/pages/ucenter/order/order?index=2'>
         <image class='user_column_item_image' src='/static/images/send.png'></image>
         <view class='user_column_item_text'>待发货</view>
       </view>
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='3' data-route='/pages/ucenter/order/order'>
+      <view class='user_column_item' bindtap='goOrderIndex' data-index='3' data-route='/pages/ucenter/order/order?index=3'>
         <image class='user_column_item_image' src='/static/images/receive.png'></image>
         <view class='user_column_item_text'>待收货</view>
       </view>
-      <view class='user_column_item' bindtap='goOrderIndex' data-index='4' data-route='/pages/ucenter/order/order'>
+      <view class='user_column_item' bindtap='goOrderIndex' data-index='4' data-route='/pages/ucenter/order/order?index=4'>
         <image class='user_column_item_image' src='/static/images/comment.png'></image>
         <view class='user_column_item_text'>待评价</view>
       </view>
@@ -90,6 +90,5 @@
       <view class='user_tool_item_text'>关于我们</view>
     </view>
   </view>
-
-  <!--<view class="logout" bindtap="exitLogin">退出登录</view>-->
+  <view class="logout" bindtap="exitLogin">退出登录</view>
 </view>

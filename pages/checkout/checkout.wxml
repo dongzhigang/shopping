@@ -1,6 +1,6 @@
 <view class="container">
     <view class="address-box">
-        <view class="address-item" bindtap="selectAddress" wx:if="{{checkedAddress}}">
+        <view class="address-item" bindtap="selectAddress" wx:if="{{addressId}}">
             <view class='lt'>
               <view class="l">
                   <text class="name">收货人：{{checkedAddress.name}}</text>
@@ -65,19 +65,25 @@
     </view>
 
     <view class="goods-items">
-        <view class="item" >
-            <view class="img">
-                <image src="{{path}}{{checkedGoodsList.img}}"></image>
-            </view>
-            <view class="info">
-                <view class="t">
-                    <text class="name">{{checkedGoodsList.name}}</text>
-                    <text class="number">x{{goodsNum}}</text>
-                </view>
-                <view class="m">{{checkedGoodsList.value}}</view>
-                <view class="b">￥{{checkedGoodsList.at_price}}</view>
-            </view>
-        </view>
+        <block wx:for='{{checkedGoodsList}}' wx:key="index">
+          <view class='title'>
+            <image src='{{item.product_msg.brand.img}}'></image>
+            <text>{{item.product_msg.brand.brand_name}}</text>
+          </view>
+          <view class="item" >
+              <view class="img">
+                  <image src="{{item.product_msg.img}}"></image>
+              </view>
+              <view class="info">
+                  <view class="t">
+                      <text class="name">{{item.product_msg.name}}</text>
+                      <text class="number">x{{goodsNum || item.num}}</text>
+                  </view>
+                  <view class="m">{{PropertyVal ||item.property_val}}</view>
+                  <view class="b">￥{{item.product_msg.at_price}}</view>
+              </view>
+          </view>
+        </block>
     </view>
 
     <view class="order-total">

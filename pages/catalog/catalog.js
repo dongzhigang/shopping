@@ -5,7 +5,7 @@ const app = getApp();
 Page({
  data: {
    path:app.globalData.path,
-   id:0,                    //一级分类id
+   Cate_id:0,                    //一级分类id
    cateList:[],             //一级分类列表
    sortList:[]              //当前分类列表
  },
@@ -22,7 +22,7 @@ Page({
         if (res.code == 0) {
           _that.setData({
             cateList: res.data.cateList,
-            id: res.data.findCate.id,
+            Cate_id: res.data.findCate.Cate_id,
             cateImg: res.data.findCate.img,
             cateName: res.data.findCate.Cate_name,
             cateDocs: res.data.findCate.docs,
@@ -46,7 +46,7 @@ Page({
         console.log(res)
         if (res.code == 0) {
           _that.setData({
-            id: res.data.findCate.id,
+            Cate_id: res.data.findCate.Cate_id,
             cateImg: res.data.findCate.img,
             cateName: res.data.findCate.Cate_name,
             cateDocs: res.data.findCate.docs,

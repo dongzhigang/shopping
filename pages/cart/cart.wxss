@@ -141,7 +141,20 @@ page {
   background: #fff;
   margin-bottom: 18rpx;
 }
-
+.cart-view .title{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding:20rpx;
+  border-bottom:solid 1rpx #eee; 
+}
+.cart-view .title image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.cart-view .title text{
+  margin-left: 10rpx;
+}
 .cart-view .item {
   height: 164rpx;
   width: 100%;

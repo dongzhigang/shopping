@@ -5,35 +5,13 @@ var app = getApp();
 
 Page({
   data: {
+    path:app.globalData.path,
     userInfo: {
       nickName: '点击登录',
-      avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+      imgUrl: '/static/images/login.png'
     }
   },
-  onLoad: function(options) {
-    // 页面初始化 options为页面跳转所带来的参数
-  },
-  onReady: function() {
 
-  },
-  onShow: function() {
-
-    //获取用户的登录信息
-    if (app.globalData.hasLogin) {
-      let userInfo = wx.getStorageSync('userInfo');
-      this.setData({
-        userInfo: userInfo,
-      });
-    }
-
-  },
-  onHide: function() {
-    // 页面隐藏
-
-  },
-  onUnload: function() {
-    // 页面关闭
-  },
   goLogin() {
     if (!app.globalData.hasLogin) {
       wx.navigateTo({
@@ -41,6 +19,7 @@ Page({
       });
     }
   },
+  //我的订单
   goOrder() {
     if (app.globalData.hasLogin) {
       wx.navigateTo({
@@ -52,21 +31,20 @@ Page({
       });
     }
   },
-    goOrderIndex(e) {
-    let tab = e.currentTarget.dataset.index
+  //订单状态
+  goOrderIndex(e) {
     let route = e.currentTarget.dataset.route
-    try {
-      wx.setStorageSync('tab', tab);
-    } catch (e) {
-
-    }
-    wx.navigateTo({
-      url: route,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    if (app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: route
+      });
+    } else {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+    };
   },
+  //优惠卷
   goCoupon() {
     if (app.globalData.hasLogin) {
       wx.navigateTo({
@@ -77,30 +55,33 @@ Page({
         url: "/pages/auth/login/login"
       });
     };
- },
- goGroupon() {
-  if (app.globalData.hasLogin) {
-   wx.navigateTo({
-    url: "/pages/groupon/myGroupon/myGroupon"
-   });
-  } else {
-   wx.navigateTo({
-    url: "/pages/auth/login/login"
-   });
-  };
- },
- goCollect() {
-  if (app.globalData.hasLogin) {
-   wx.navigateTo({
-    url: "/pages/ucenter/collect/collect"
-   });
-  } else {
-   wx.navigateTo({
-    url: "/pages/auth/login/login"
-   });
-  };
- },
-   goFeedback(e) {
+  },
+  //我的拼团
+  goGroupon() {
+    if (app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/groupon/myGroupon/myGroupon"
+      });
+    } else {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+    };
+  },
+  //商品收藏
+  goCollect() {
+    if (app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/ucenter/collect/collect"
+      });
+    } else {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+    };
+  },
+  //意见反馈
+  goFeedback(e) {
     if (app.globalData.hasLogin) {
       wx.navigateTo({
         url: "/pages/ucenter/feedback/feedback"
@@ -111,73 +92,114 @@ Page({
       });
     };
   },
- goFootprint() {
-  if (app.globalData.hasLogin) {
-   wx.navigateTo({
-    url: "/pages/ucenter/footprint/footprint"
-   });
-  } else {
-   wx.navigateTo({
-    url: "/pages/auth/login/login"
-   });
-  };
- },
- goAddress() {
-  if (app.globalData.hasLogin) {
-   wx.navigateTo({
-    url: "/pages/ucenter/address/address"
-   });
-  } else {
-   wx.navigateTo({
-    url: "/pages/auth/login/login"
-   });
-  };
- },
-bindPhoneNumber: function (e) {
-  if (e.detail.errMsg !== "getPhoneNumber:ok"){
-    // 拒绝授权
-    return;
-  }
+  //浏览足迹
+  goFootprint() {
+    if (app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/ucenter/footprint/footprint"
+      });
+    } else {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+    };
+  },
+  //地址管理
+  goAddress() {
+    if (app.globalData.hasLogin) {
+      wx.navigateTo({
+        url: "/pages/ucenter/address/address"
+      });
+    } else {
+      wx.navigateTo({
+        url: "/pages/auth/login/login"
+      });
+    };
+  },
+  //绑定手机
+  bindPhoneNumber: function (e) {
+    if (e.detail.errMsg !== "getPhoneNumber:ok") {
+      // 拒绝授权
+      return;
+    }
 
-  if (!app.globalData.hasLogin) {
-    wx.showToast({
-      title: '绑定失败：请先登录',
-      icon: 'none',
-      duration: 2000
-    });
-    return;
-  }
-
-  util.request(api.AuthBindPhone, { iv: e.detail.iv, encryptedData: e.detail.encryptedData }, 'POST').then(function (res) {
-    if (res.errno === 0) {
+    if (!app.globalData.hasLogin) {
       wx.showToast({
-        title: '绑定手机号码成功',
-        icon: 'success',
+        title: '绑定失败：请先登录',
+        icon: 'none',
         duration: 2000
       });
+      return;
     }
-  });
-}, 
-aboutUs: function () {
-  wx.navigateTo({
-    url: '/pages/about/about'
-  });
-}, 
- exitLogin: function() {
-  wx.showModal({
-   title: '',
-   confirmColor: '#b4282d',
-   content: '退出登录？',
-   success: function(res) {
-    if (res.confirm) {
-     wx.removeStorageSync('token');
-     wx.removeStorageSync('userInfo');
-     wx.switchTab({
-      url: '/pages/index/index'
-     });
-    }
-   }
-  })
 
-  }
+    util.request(api.AuthBindPhone, { iv: e.detail.iv, encryptedData: e.detail.encryptedData }, 'POST').then(function (res) {
+      if (res.errno === 0) {
+        wx.showToast({
+          title: '绑定手机号码成功',
+          icon: 'success',
+          duration: 2000
+        });
+      }
+    });
+  },
+  //关于我们
+  aboutUs: function () {
+    wx.navigateTo({
+      url: '/pages/about/about'
+    });
+  },
+  //退出登录
+  exitLogin: function () {
+    wx.showModal({
+      title: '',
+      confirmColor: '#b4282d',
+      content: '退出登录？',
+      success: function (res) {
+        if (res.confirm) {
+          wx.removeStorageSync('userInfo');
+          app.globalData.user_id='';
+          app.globalData.hasLogin=false;
+          wx.switchTab({
+            url: '/pages/index/index'
+          });
+        }
+      }
+    })
+  },
+
+  /***
+   * 生命周期
+   */
+  onLoad: function(options) {
+    // 页面初始化 options为页面跳转所带来的参数
+  },
+  onReady: function() {
+
+  },
+  onShow: function() {
+    //获取用户的登录信息
+    if (app.globalData.hasLogin) {
+      let userInfo = wx.getStorageSync('userInfo');
+      userInfo.imgUrl = userInfo.imgUrl ? (this.data.path + userInfo.imgUrl) :"/static/images/login.png"
+      this.setData({
+        userInfo: userInfo,
+      });
+    }else{
+      this.setData({
+        userInfo: {
+          nickName: '点击登录',
+          imgUrl: '/static/images/login.png'
+        }
+      })
+    }
+
+  },
+  onHide: function() {
+    // 页面隐藏
+
+  },
+  onUnload: function() {
+    // 页面关闭
+  },
+ 
 })

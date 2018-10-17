@@ -36,8 +36,7 @@ function request(url, data = {}, method = "GET") {
           if (res.data.errno == 501) {
             // 清除登录相关内容
             try {
-              wx.removeStorageSync('userInfo');
-              wx.removeStorageSync('token');
+              wx.removeStorageSync('user_id');
             } catch (e) {
               // Do something when catch error
             }
@@ -80,7 +79,6 @@ function showLoading(success){
 }
 
 function redirect(url) {
-
   //判断页面是否需要登录
   if (false) {
     wx.redirectTo({
