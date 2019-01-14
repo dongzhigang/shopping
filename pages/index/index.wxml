@@ -3,7 +3,7 @@
   <!-- 轮播 -->
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="index">
-      <image src="{{item.img}}" background-size="cover"></image>
+      <image src="{{item.img}}" ></image>
     </swiper-item>
   </swiper>
   <!-- 分类 -->
@@ -55,11 +55,11 @@
     </view>
     <view class="b">
       <view class="item item-1" wx:for="{{brands}}" wx:key="index">
-        <navigator url="/pages/brandDetail/brandDetail?id={{item.id}}">
+        <navigator url="/pages/brandDetail/brandDetail?id={{item.brand_id}}">
           <view class="wrap">
-          <image class="img" src="" background-size="cover"></image>
+          <image class="img" src="{{item.img}}" ></image>
           <view class="mt">
-            <text class="brand">{{item.brand_name}}1</text>
+            <text class="brand">{{item.brand_name}}</text>
             <text class="price">{{item.bot_price}}</text>
             <text class="unit">元起</text>
           </view>

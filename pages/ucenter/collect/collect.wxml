@@ -1,13 +1,7 @@
 <view class="container">
-  <view class="no-collect" wx:if="{{!collectList.lenght}}">
-    <view class="c">
-      <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
-      <text>还没有收藏</text>
-    </view>
-  </view>
-  <view class="collect-list" wx:else>
+  <view class="collect-list" wx:if="{{collectList.length > 0}}">
     <view class="item" bindtap="openGoods"  bindtouchstart="touchStart" bindtouchend="touchEnd" wx:for="{{collectList}}" wx:key="id" data-productId="{{item.product.product_id}}" data-collectId='{{item.collect_id}}'>
-      <image class="img" src="{{path}}{{item.product.img}}"></image>
+      <image class="img" src="{{item.product.img}}"></image>
       <view class="info">
         <view class="name">{{item.product.name}}</view>
         <view class="subtitle">{{item.product.docs}}</view>
@@ -15,5 +9,10 @@
       </view>
     </view>
   </view>
-
+  <view class="no-collect" wx:else>
+    <view class="c">
+      <image src="/static/images/noCart.png" />
+      <text>还没有收藏{{collectList.length}}</text>
+    </view>
+  </view>
 </view>

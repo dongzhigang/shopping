@@ -1,6 +1,6 @@
 <!-- 当前分类 -->
 <view class="container">
-    <view class="cate-nav">
+    <view class="cate-nav" wx:if="{{currentList.length}}">
         <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
             <view  class="item {{id == item.Sort_id?'active':''}}" wx:for="{{currentList}}" wx:key="index" 
               data-id="{{item.Sort_id}}"  bindtap='switchCate'>

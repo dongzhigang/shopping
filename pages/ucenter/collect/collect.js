@@ -21,7 +21,6 @@ Page({
     let data = { user_id: that.data.user_id, page: that.data.page, rows: that.data.rows };
     util.request(url, data,'POST').then(function (res) {
       if (res.code === 0) {
-        console.log(res.data)
         that.setData({
           collectList: that.data.collectList.concat(res.data),
           // totalPages: res.data.totalPages
@@ -81,7 +80,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '/pages/goods/goods?id=' + goodsId,
+        url: '/pages/goods/goods?product_id=' + goodsId,
       });
     }
   },
@@ -104,13 +103,16 @@ Page({
    * 生命周期
    */
   onLoad: function (options) {
+    let user_id = wx.getStorageSync('userInfo').user_id;
+    this.setData({
+      user_id:user_id
+    })
     this.getCollectList();
   },
   onReady: function () {
 
   },
   onShow: function () {
-    this.getCollectList();
   },
   onHide: function () {
     // 页面隐藏

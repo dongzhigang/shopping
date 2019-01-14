@@ -24,14 +24,14 @@
           <view class="goods">
             <block wx:for="{{cartGoods}}" wx:key="index">
               <view class='title'>
-                <image src='{{path}}{{item.product_msg.brand.img}}'></image>
+                <image src='{{item.product_msg.brand.icon}}'></image>
                 <text>{{item.product_msg.brand.brand_name}}</text>
               </view>
               <view class="item {{item.checked ?'edit':''}}" >
                 <view class="checkbox  {{item.checked ? 'checked' : ''}}" bindtap="checkedItem" 
                   data-index='{{index}}' ></view>
                 <view class="cart-goods">
-                  <image class="img" src="{{path + item.product_msg.img}}"></image>
+                  <image class="img" src="{{item.product_msg.img}}"></image>
                   <view class="info">
                     <view class="t">
                       <text class="name">{{item.product_msg.name}}</text>
@@ -56,7 +56,7 @@
       </view>
       <view class="cart-bottom">
         <view class="checkbox {{checkedAll ? 'checked' : ''}}" bindtap="checkedAll">全选({{selectNumber}})</view>
-        <view class="total">￥{{totalPrice}}</view>
+        <view class="total">合计：￥{{totalPrice}}</view>
         <view class='action_btn_area'>
           <view class="{{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart" id="edit">
             {{!isEditCart ? '编辑' : '完成'}}

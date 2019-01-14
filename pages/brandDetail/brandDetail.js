@@ -14,10 +14,10 @@ Page({
    * 事件
    */
   getBrand: function () {
-    let _that = this;
+    let _that = this;5
     let url = api.BrandDetail;
     let data = {
-      id:this.data.id
+      brand_id:this.data.id
     }
     util.showLoading(function(){
       util.request(url, data).then(function (res) {
@@ -37,8 +37,9 @@ Page({
    */
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    console.log(options)
     this.setData({
-      id: parseInt(options.id)
+      id: options.id
     });
     this.getBrand();
   },

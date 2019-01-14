@@ -29,15 +29,21 @@ Page({
         if (res.code == 0) {
           _that.setData({
             currentList: res.data.currentList,
-            currenName: res.data.sortFind.Sort_name,
-            currenDocs: res.data.sortFind.docs
           })
-          //当id是分类id时，这里需要重新设置成分类的一个子分类的id
-          if (_that.data.id == res.data.cateFind.Cate_id){
-            _that.setData({ id: res.data.sortFind.Sort_id})
+          if (res.data.sortFind){
+            _that.setData({
+              currenName: res.data.sortFind.Sort_name,
+              currenDocs: res.data.sortFind.docs
+            })
+            //当id是分类id时，这里需要重新设置成分类的一个子分类的id
+            if (_that.data.id == res.data.cateFind.Cate_id) {
+              _that.setData({ id: res.data.sortFind.Sort_id })
+            }
           }
           _that.productList();
           wx.hideLoading();
+        }else{
+
         }
       })
     })
